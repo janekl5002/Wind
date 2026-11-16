@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Routes Visualization</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" />
+    
+    <!-- Leaflet JS -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+        
+        #controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            max-width: 320px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        #controls h4 {
+            margin: 10px 0 5px 0;
+            font-size: 14px;
+        }
+        
+        #controls h3 {
+            margin-top: 0;
+        }
+        
+        #controls input[type="file"] {
+            margin: 10px 0;
+        }
+        
+        #controls button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        
+        #controls button:hover {
+            background: #0056b3;
+        }
+        
+        #route-info {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 12px;
+        }
+        
+        .route-item {
+            margin: 5px 0;
+            padding: 5px;
+            background: #f5f5f5;
+            border-radius: 3px;
+        }
+        
+        /* Autocomplete styles */
+        .autocomplete-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .autocomplete-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: none;
+        }
+        
+        .autocomplete-suggestions.show {
+            display: block;
+        }
+        
+        .autocomplete-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+        
+        .autocomplete-item:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+        
+        .autocomplete-item strong {
+            color: #007bff;
+        }
+        
+        .autocomplete-item .country {
+            color: #666;
+            font-size: 11px;
+            margin-left: 5px;
+        }
+        
+        .autocomplete-item .coordinates {
+            color: #999;
+            font-size: 10px;
+            margin-top: 2px;
+        }
+        
+        .autocomplete-item mark {
+            background-color: #ffeb3b;
+            padding: 0;
+            font-weight: bold;
+        }
+        
+        /* Wind visualization legend */
+        #wind-legend {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            width: 200px;
+            background-color: white;
+            z-index: 9999;
+            font-size: 12px;
+            border: 2px solid grey;
+            border-radius: 5px;
+            padding: 10px;
+            display: none;
+        }
+        
+        #wind-legend.show {
+            display: block;
+        }
+        
+        #wind-legend h4 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+        
+        #wind-legend p {
+            margin: 4px 0;
+            font-size: 11px;
+        }
+        
+        .wind-legend-color {
+            display: inline-block;
+            width: 20px;
+            height: 12px;
+            margin-right: 5px;
+            vertical-align: middle;
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <h3>Shipping Routes</h3>
+        
+        <!-- Route Generation Form -->
+        <div id="generate-route-section">
+            <h4>Generate New Route</h4>
+            <div id="server-status" style="font-size: 10px; margin-bottom: 5px; padding: 3px; border-radius: 3px; background: #f0f0f0;">
+                <span id="server-status-text">Checking server...</span>
+            </div>
+            <div class="autocomplete-container">
+                <input type="text" id="originPort" placeholder="Origin port (e.g., Shanghai)" 
+                       style="width: 100%; padding: 5px; margin: 5px 0; box-sizing: border-box;"
+                       autocomplete="off">
+                <div id="originSuggestions" class="autocomplete-suggestions"></div>
+            </div>
+            <div class="autocomplete-container">
+                <input type="text" id="destPort" placeholder="Destination port (e.g., New York)" 
+                       style="width: 100%; padding: 5px; margin: 5px 0; box-sizing: border-box;"
+                       autocomplete="off">
+                <div id="destSuggestions" class="autocomplete-suggestions"></div>
+            </div>
+            <button onclick="generateRoute()" style="width: 100%;">Generate Route</button>
+            <div id="status" style="margin-top: 5px; font-size: 11px; color: #666;"></div>
+        </div>
+        
+        <hr style="margin: 15px 0; border: none; border-top: 1px solid #ddd;">
+        
+        <!-- Load from File -->
+        <h4>Load from File</h4>
+        <input type="file" id="geojsonFile" accept=".geojson" multiple>
+        <button onclick="loadDefaultRoute()">Load Shanghai-New York</button>
+        <button onclick="clearRoutes()">Clear All Routes</button>
+        <div style="margin-top: 10px;">
+            <label>
+                <input type="checkbox" id="showWindData" onchange="toggleWindLayer()" checked>
+                Show Wind Data
+            </label>
+        </div>
+        <div id="route-info"></div>
+    </div>
+    
+    <!-- Wind Legend -->
+    <div id="wind-legend">
+        <h4>Wind Speed (m/s)</h4>
+        <p><span class="wind-legend-color" style="background-color:#e0f2f1;"></span> &lt; 0.5 (Calm)</p>
+        <p><span class="wind-legend-color" style="background-color:#4caf50;"></span> 0.5-3.3 (Light)</p>
+        <p><span class="wind-legend-color" style="background-color:#8bc34a;"></span> 3.3-7.9 (Gentle)</p>
+        <p><span class="wind-legend-color" style="background-color:#ffeb3b;"></span> 7.9-13.8 (Moderate)</p>
+        <p><span class="wind-legend-color" style="background-color:#ff9800;"></span> 13.8-20.7 (Fresh)</p>
+        <p><span class="wind-legend-color" style="background-color:#ff5722;"></span> 20.7-28.4 (Strong)</p>
+        <p><span class="wind-legend-color" style="background-color:#f44336;"></span> 28.4-38.0 (Near Gale)</p>
+        <p><span class="wind-legend-color" style="background-color:#9c27b0;"></span> &gt; 38.0 (Gale+)</p>
+    </div>
+    
+    <div id="map"></div>
+    
+    <script>
+        // Initialize map
+        const map = L.map('map').setView([30, 20], 2);
+        
+        // Add tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        
+        // Store routes
+        const routes = [];
+        const routeLayers = [];
+        const markers = [];
+        const windLayers = [];
+        let windDataGroup = null;
+        
+        // Color palette
+        const colors = ['#007bff', '#dc3545', '#28a745', '#ffc107', '#6f42c1', 
+                       '#e83e8c', '#20c997', '#fd7e14', '#6610f2', '#6c757d'];
+        
+        function loadRouteFromFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const geojson = JSON.parse(e.target.result);
+                    addRouteToMap(geojson, file.name);
+                    updateRouteInfo();
+                } catch (error) {
+                    alert('Error parsing GeoJSON: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        function loadRouteFromURL(url, name) {
+            fetch(url)
+                .then(response => response.json())
+                .then(geojson => {
+                    addRouteToMap(geojson, name);
+                    updateRouteInfo();
+                })
+                .catch(error => {
+                    alert('Error loading route: ' + error.message);
+                });
+        }
+        
+        function addRouteToMap(geojson, routeName) {
+            if (!geojson.features || geojson.features.length === 0) {
+                alert('No features found in GeoJSON');
+                return;
+            }
+            
+            const feature = geojson.features[0];
+            const props = feature.properties || {};
+            const routeName_display = props['route name'] || routeName;
+            const distance = props.distKM || 'N/A';
+            const originLat = parseFloat(props.olat || 0);
+            const originLon = parseFloat(props.olon || 0);
+            const destLat = parseFloat(props.dlat || 0);
+            const destLon = parseFloat(props.dlon || 0);
+            
+            // Get color for this route
+            const color = colors[routes.length % colors.length];
+            
+            // Add route line
+            const routeLayer = L.geoJSON(feature, {
+                style: {
+                    color: color,
+                    weight: 4,
+                    opacity: 0.8
+                }
+            }).bindPopup(`
+                <b>${routeName_display}</b><br>
+                Distance: ${distance} km<br>
+                Origin: (${originLat.toFixed(4)}, ${originLon.toFixed(4)})<br>
+                Destination: (${destLat.toFixed(4)}, ${destLon.toFixed(4)})
+            `).addTo(map);
+            
+            routeLayers.push(routeLayer);
+            
+            // Add origin marker
+            const originMarker = L.marker([originLat, originLon], {
+                icon: L.icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                })
+            }).bindPopup(`<b>Origin:</b> ${routeName_display.split('-')[0]}`).addTo(map);
+            
+            markers.push(originMarker);
+            
+            // Add destination marker
+            const destMarker = L.marker([destLat, destLon], {
+                icon: L.icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                })
+            }).bindPopup(`<b>Destination:</b> ${routeName_display.split('-').slice(-1)[0]}`).addTo(map);
+            
+            markers.push(destMarker);
+            
+            // Store route info
+            routes.push({
+                name: routeName_display,
+                distance: distance,
+                bounds: routeLayer.getBounds()
+            });
+            
+            // Try to load wind data for this route
+            loadWindData(routeName_display);
+            
+            // Fit map to show all routes
+            if (routes.length === 1) {
+                map.fitBounds(routeLayer.getBounds(), {padding: [50, 50]});
+            } else {
+                let bounds = routeLayers[0].getBounds();
+                routeLayers.forEach(layer => {
+                    bounds.extend(layer.getBounds());
+                });
+                map.fitBounds(bounds, {padding: [50, 50]});
+            }
+        }
+        
+        function updateRouteInfo() {
+            const infoDiv = document.getElementById('route-info');
+            if (routes.length === 0) {
+                infoDiv.innerHTML = '<p>No routes loaded</p>';
+                return;
+            }
+            
+            let html = '<strong>Loaded Routes:</strong>';
+            routes.forEach((route, idx) => {
+                html += `<div class="route-item">
+                    <strong>${route.name}</strong><br>
+                    Distance: ${route.distance} km<br>
+                    <small style="color: ${colors[idx % colors.length]}">●</small>
+                </div>`;
+            });
+            infoDiv.innerHTML = html;
+        }
+        
+        function getWindColor(windSpeed) {
+            if (windSpeed === null || windSpeed === undefined) return '#808080';
+            if (windSpeed < 0.5) return '#e0f2f1';
+            if (windSpeed < 3.3) return '#4caf50';
+            if (windSpeed < 7.9) return '#8bc34a';
+            if (windSpeed < 13.8) return '#ffeb3b';
+            if (windSpeed < 20.7) return '#ff9800';
+            if (windSpeed < 28.4) return '#ff5722';
+            if (windSpeed < 38.0) return '#f44336';
+            return '#9c27b0';
+        }
+        
+        function calculateBearing(lat1, lon1, lat2, lon2) {
+            // Calculate bearing from point 1 to point 2
+            const lat1Rad = lat1 * Math.PI / 180;
+            const lat2Rad = lat2 * Math.PI / 180;
+            const deltaLon = (lon2 - lon1) * Math.PI / 180;
+            
+            const y = Math.sin(deltaLon) * Math.cos(lat2Rad);
+            const x = Math.cos(lat1Rad) * Math.sin(lat2Rad) - 
+                      Math.sin(lat1Rad) * Math.cos(lat2Rad) * Math.cos(deltaLon);
+            
+            const bearingRad = Math.atan2(y, x);
+            let bearingDeg = bearingRad * 180 / Math.PI;
+            
+            // Normalize to 0-360 degrees
+            bearingDeg = (bearingDeg + 360) % 360;
+            
+            return bearingDeg;
+        }
+
+        function normalizeRelativeAngle(angle) {
+            const normalized = ((angle + 540) % 360) - 180;
+            return normalized;
+        }
+
+        function formatSignedAngle(angle) {
+            if (angle === null || angle === undefined || Number.isNaN(angle)) {
+                return 'N/A';
+            }
+            return `${angle >= 0 ? '+' : ''}${angle.toFixed(1)}°`;
+        }
+        
+        function loadWindData(routeName) {
+            // Try to load wind data for the route
+            const possibleUrls = [
+                `output/${routeName}_weather.json`,
+                `output/${routeName}_output_weather.json`,
+                `output/${routeName}_output_waypoints.json`
+            ];
+            
+            // Try each URL sequentially
+            let promise = Promise.reject();
+            for (const url of possibleUrls) {
+                promise = promise.catch(() => 
+                    fetch(url)
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                            throw new Error('Not found');
+                        })
+                );
+            }
+            
+            promise
+                .then(data => {
+                    if (data && data.waypoints_weather) {
+                        addWindVisualization(data.waypoints_weather, routeName);
+                        document.getElementById('wind-legend').classList.add('show');
+                        return true;
+                    }
+                    throw new Error('No wind data found');
+                })
+                .catch(() => {
+                    // Wind data not found - will try to generate it
+                    return false;
+                });
+        }
+        
+        async function loadWindDataWithGeneration(routeName, geojson, statusDiv) {
+            // First try to load existing wind data
+            const possibleUrls = [
+                `output/${routeName}_weather.json`,
+                `output/${routeName}_output_weather.json`
+            ];
+            
+            let found = false;
+            for (const url of possibleUrls) {
+                try {
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data && data.waypoints_weather) {
+                            addWindVisualization(data.waypoints_weather, routeName);
+                            document.getElementById('wind-legend').classList.add('show');
+                            found = true;
+                            if (statusDiv) {
+                                statusDiv.textContent = statusDiv.textContent.replace(' | Loading wind data...', ' | Wind data loaded ✓');
+                            }
+                            break;
+                        }
+                    }
+                } catch (e) {
+                    // Continue to next URL
+                }
+            }
+            
+            // If wind data not found, offer to generate it
+            if (!found && statusDiv) {
+                statusDiv.textContent = statusDiv.textContent.replace(' | Loading wind data...', ' | Generating wind data...');
+                statusDiv.style.color = '#ff9800';
+                
+                try {
+                    // Step 1: Extract waypoints
+                    const waypointsResponse = await fetch('http://localhost:5000/api/extract-waypoints', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            route_name: routeName,
+                            geojson: geojson,
+                            method: 'distance',
+                            interval_km: 200.0,
+                            max_waypoints: 50
+                        })
+                    });
+                    
+                    if (waypointsResponse.ok) {
+                        const waypointsData = await waypointsResponse.json();
+                        
+                        // Step 2: Query wind data
+                        statusDiv.textContent = statusDiv.textContent.replace('Generating wind data...', ' | Querying wind data (this may take a minute)...');
+                        
+                        const windResponse = await fetch('http://localhost:5000/api/query-wind-data', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                route_name: routeName,
+                                waypoints: waypointsData.waypoints || waypointsData.coordinates || []
+                            })
+                        });
+                        
+                        if (windResponse.ok) {
+                            const windData = await windResponse.json();
+                            if (windData.waypoints_weather) {
+                                addWindVisualization(windData.waypoints_weather, routeName);
+                                document.getElementById('wind-legend').classList.add('show');
+                                statusDiv.textContent = statusDiv.textContent.replace('Querying wind data (this may take a minute)...', ' | Wind data generated ✓');
+                                statusDiv.style.color = '#28a745';
+                            } else {
+                                statusDiv.textContent = statusDiv.textContent.replace('Querying wind data (this may take a minute)...', ' | Wind data generation failed');
+                                statusDiv.style.color = '#dc3545';
+                            }
+                        } else {
+                            statusDiv.textContent = statusDiv.textContent.replace('Querying wind data (this may take a minute)...', ' | Wind data query failed');
+                            statusDiv.style.color = '#dc3545';
+                        }
+                    } else {
+                        statusDiv.textContent = statusDiv.textContent.replace('Generating wind data...', ' | Waypoint extraction failed');
+                        statusDiv.style.color = '#dc3545';
+                    }
+                } catch (error) {
+                    console.error('Wind data generation error:', error);
+                    statusDiv.textContent = statusDiv.textContent.replace(/ \| .*$/, ' | Wind data unavailable');
+                    statusDiv.style.color = '#dc3545';
+                }
+            }
+        }
+        
+        function addWindVisualization(waypointsWeather, routeName) {
+            // Remove existing wind layers
+            if (windDataGroup) {
+                map.removeLayer(windDataGroup);
+            }
+            
+            windDataGroup = L.layerGroup();
+            
+            waypointsWeather.forEach((wpData, index) => {
+                const waypoint = wpData.waypoint;
+                const wind = wpData.wind_data;
+                
+                if (!wind || !waypoint) return;
+                
+                const lat = waypoint.lat;
+                const lon = waypoint.lon;
+                const stats = wind.statistics || {};
+                
+                if (lat === null || lat === undefined || lon === null || lon === undefined) return;
+                
+                const windSpeed = stats.avg_wind_speed_ms;
+                const windDirectionFrom = stats.avg_wind_direction_from_deg ?? stats.avg_wind_direction_deg;
+                const windDirectionTo = stats.avg_wind_direction_to_deg ?? (windDirectionFrom !== null && windDirectionFrom !== undefined ? (windDirectionFrom + 180) % 360 : null);
+                const maxWind = stats.max_wind_speed_ms;
+                const minWind = stats.min_wind_speed_ms;
+                const representativeTime = wind.representative_time || (wind.representative_sample && wind.representative_sample.time) || (wind.hourly_data && wind.hourly_data.times && wind.hourly_data.times.length ? wind.hourly_data.times[0] : null);
+                const representativeDate = representativeTime ? new Date(representativeTime.endsWith('Z') ? representativeTime : `${representativeTime}Z`) : null;
+                const relativeWindProvided = stats.wind_relative_to_route_deg;
+                const relativeWind = relativeWindProvided !== undefined && relativeWindProvided !== null
+                    ? relativeWindProvided
+                    : (windDirectionTo !== null && windDirectionTo !== undefined && routeDirection !== null && routeDirection !== undefined
+                        ? normalizeRelativeAngle(windDirectionTo - routeDirection)
+                        : null);
+ 
+                // Calculate marker size based on wind speed
+                const radius = windSpeed ? Math.max(5, Math.min(20, windSpeed * 2)) : 5;
+                const color = getWindColor(windSpeed);
+                
+                // Create wind marker
+                const windMarker = L.circleMarker([lat, lon], {
+                    radius: radius,
+                    fillColor: color,
+                    color: '#333',
+                    weight: 1,
+                    opacity: 0.8,
+                    fillOpacity: 0.7
+                });
+                
+                // Get route direction (ship heading) - calculate if not present
+                let routeDirection = waypoint.route_direction_deg;
+                if (routeDirection === null || routeDirection === undefined) {
+                    // Calculate from next waypoint if available
+                    if (index < waypointsWeather.length - 1) {
+                        const nextWp = waypointsWeather[index + 1].waypoint;
+                        if (nextWp && nextWp.lat !== null && nextWp.lat !== undefined && 
+                            nextWp.lon !== null && nextWp.lon !== undefined) {
+                            routeDirection = calculateBearing(lat, lon, nextWp.lat, nextWp.lon);
+                        }
+                    } else if (index > 0) {
+                        // Last waypoint, use direction from previous
+                        const prevWp = waypointsWeather[index - 1].waypoint;
+                        if (prevWp && prevWp.lat !== null && prevWp.lat !== undefined && 
+                            prevWp.lon !== null && prevWp.lon !== undefined) {
+                            routeDirection = calculateBearing(prevWp.lat, prevWp.lon, lat, lon);
+                        }
+                    }
+                }
+                
+                // Create popup
+                const distanceStr = waypoint.distance_km !== undefined ? 
+                    `${waypoint.distance_km.toFixed(1)} km` : 'N/A';
+                const speedStr = windSpeed !== null && windSpeed !== undefined ? `${windSpeed.toFixed(2)} m/s` : 'N/A';
+                const maxStr = maxWind !== null && maxWind !== undefined ? `${maxWind.toFixed(2)} m/s` : 'N/A';
+                const minStr = minWind !== null && minWind !== undefined ? `${minWind.toFixed(2)} m/s` : 'N/A';
+                const dirFromStr = windDirectionFrom !== null && windDirectionFrom !== undefined ? `${windDirectionFrom.toFixed(0)}°` : 'N/A';
+                const dirToStr = windDirectionTo !== null && windDirectionTo !== undefined ? `${windDirectionTo.toFixed(0)}°` : 'N/A';
+                const routeDirStr = routeDirection !== null && routeDirection !== undefined ? `${routeDirection.toFixed(1)}°` : 'N/A';
+                const timeStr = representativeDate ? representativeDate.toUTCString() : 'N/A';
+                const relativeStr = relativeWind !== null && relativeWind !== undefined ? formatSignedAngle(relativeWind) : 'N/A';
+                
+                windMarker.bindPopup(`
+                    <div style="width: 200px;">
+                        <h5>Wind Data</h5>
+                        <p><b>Location:</b> ${lon.toFixed(4)}, ${lat.toFixed(4)}</p>
+                        <p><b>Distance:</b> ${distanceStr}</p>
+                        <p><b>Data Time (UTC):</b><br>${timeStr}</p>
+                        <hr>
+                        <p><b>Wind Speed:</b> ${speedStr}</p>
+                        <p><small>Max: ${maxStr} | Min: ${minStr}</small></p>
+                        <p><b>Wind Direction (to):</b> ${dirToStr}</p>
+                        <p><small>From: ${dirFromStr}</small></p>
+                        <p><b>Wind vs Ship:</b> ${relativeStr}</p>
+                        <p><b>Route Direction:</b> ${routeDirStr}</p>
+                    </div>
+                `);
+                
+                const tooltipTime = representativeDate ? ` | ${representativeDate.toUTCString()}` : '';
+                const tooltipRelative = relativeWind !== null && relativeWind !== undefined ? ` | Δ ${relativeStr}` : '';
+                windMarker.bindTooltip(`Wind: ${speedStr} @ ${dirToStr}${tooltipRelative}${tooltipTime}`);
+                windMarker.addTo(windDataGroup);
+                
+                // Add wind direction arrow
+                if (windDirectionTo !== null && windDirectionTo !== undefined && windSpeed !== null) {
+                    // Calculate arrow endpoint
+                    const arrowLength = Math.max(0.1, Math.min(0.5, windSpeed / 20.0));
+                    const directionRad = windDirectionTo * Math.PI / 180;
+                    
+                    const latOffset = arrowLength * Math.cos(directionRad);
+                    const lonOffset = arrowLength * Math.sin(directionRad) / Math.cos(lat * Math.PI / 180);
+                    
+                    const endLat = lat + latOffset;
+                    const endLon = lon + lonOffset;
+                    
+                    // Create arrow line
+                    const arrow = L.polyline([[lat, lon], [endLat, endLon]], {
+                        color: '#333',
+                        weight: 2,
+                        opacity: 0.6
+                    });
+                    arrow.addTo(windDataGroup);
+                    
+                    // Add arrowhead
+                    const arrowhead = L.circleMarker([endLat, endLon], {
+                        radius: 3,
+                        fillColor: '#333',
+                        color: '#333',
+                        fillOpacity: 1.0
+                    });
+                    arrowhead.addTo(windDataGroup);
+                }
+            });
+            
+            // Add wind layer to map if checkbox is checked
+            if (document.getElementById('showWindData').checked) {
+                windDataGroup.addTo(map);
+            }
+            
+            windLayers.push(windDataGroup);
+        }
+        
+        function toggleWindLayer() {
+            const showWind = document.getElementById('showWindData').checked;
+            if (windDataGroup) {
+                if (showWind) {
+                    windDataGroup.addTo(map);
+                } else {
+                    map.removeLayer(windDataGroup);
+                }
+            }
+            document.getElementById('wind-legend').classList.toggle('show', showWind);
+        }
+        
+        function clearRoutes() {
+            routeLayers.forEach(layer => map.removeLayer(layer));
+            markers.forEach(marker => map.removeLayer(marker));
+            if (windDataGroup) {
+                map.removeLayer(windDataGroup);
+            }
+            routeLayers.length = 0;
+            markers.length = 0;
+            routes.length = 0;
+            windLayers.length = 0;
+            windDataGroup = null;
+            document.getElementById('wind-legend').classList.remove('show');
+            updateRouteInfo();
+            map.setView([30, 20], 2);
+        }
+        
+        function loadDefaultRoute() {
+            // Try to load from output directory
+            const url = 'output/Shanghai-New-York-City_output.geojson';
+            loadRouteFromURL(url, 'Shanghai-New-York-City');
+        }
+        
+        async function generateRoute() {
+            const origin = document.getElementById('originPort').value.trim();
+            const dest = document.getElementById('destPort').value.trim();
+            const statusDiv = document.getElementById('status');
+            
+            if (!origin || !dest) {
+                statusDiv.textContent = 'Please enter both origin and destination ports';
+                statusDiv.style.color = '#dc3545';
+                return;
+            }
+            
+            statusDiv.textContent = 'Generating route... This may take a minute.';
+            statusDiv.style.color = '#007bff';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/generate-route', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        origin: origin,
+                        destination: dest,
+                        resolution: 5,
+                        panama: 0
+                    })
+                });
+                
+                // Check if response is OK before parsing
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({error: 'Unknown error'}));
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                if (data.success && data.geojson) {
+                    addRouteToMap(data.geojson, data.route_name);
+                    updateRouteInfo();
+                    statusDiv.textContent = `Route generated: ${data.origin} → ${data.destination}`;
+                    statusDiv.style.color = '#28a745';
+                    
+                    // Try to load wind data for the route
+                    if (data.route_name) {
+                        statusDiv.textContent += ' | Loading wind data...';
+                        loadWindDataWithGeneration(data.route_name, data.geojson, statusDiv);
+                    }
+                } else {
+                    throw new Error('Invalid response from server');
+                }
+            } catch (error) {
+                statusDiv.textContent = `Error: ${error.message}`;
+                statusDiv.style.color = '#dc3545';
+                console.error('Route generation error:', error);
+                
+                // Check if server is running
+                if (error.message.includes('fetch') || error.message.includes('Failed to fetch') || 
+                    error.message.includes('NetworkError')) {
+                    statusDiv.textContent = '⚠️ Server not running. Start the API server: cd searoute && python3 route_api_server.py';
+                } else if (error.message.includes('database') || error.message.includes('Port database')) {
+                    statusDiv.textContent = `⚠️ ${error.message}. Check SETUP.md for instructions.`;
+                } else if (error.message.includes('searoute.jar')) {
+                    statusDiv.textContent = `⚠️ ${error.message}. Check SETUP.md for instructions.`;
+                }
+            }
+        }
+        
+        // Autocomplete functionality
+        let searchTimeout = null;
+        const API_URL = 'http://localhost:5000';
+        let serverAvailable = true;
+        
+        // Update server status indicator
+        function updateServerStatus(available) {
+            const statusDiv = document.getElementById('server-status');
+            const statusText = document.getElementById('server-status-text');
+            if (statusDiv && statusText) {
+                if (available) {
+                    statusDiv.style.background = '#d4edda';
+                    statusDiv.style.color = '#155724';
+                    statusText.textContent = '✓ Server connected';
+                } else {
+                    statusDiv.style.background = '#f8d7da';
+                    statusDiv.style.color = '#721c24';
+                    statusText.textContent = '✗ Server not running - Start: python3 route_api_server.py';
+                }
+            }
+        }
+        
+        // Check if server is available
+        function checkServerConnection() {
+            // Check if we're accessing via file:// protocol (which won't work with fetch)
+            if (window.location.protocol === 'file:') {
+                console.error('⚠️ HTML file opened directly. Please access via: http://localhost:5000/route_visualizer.html');
+                serverAvailable = false;
+                updateServerStatus(false);
+                const statusText = document.getElementById('server-status-text');
+                if (statusText) {
+                    statusText.textContent = '✗ Open via server: http://localhost:5000/route_visualizer.html';
+                }
+                return;
+            }
+            
+            fetch(`${API_URL}/api/health`, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'no-cache',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json().then(data => {
+                            serverAvailable = true;
+                            updateServerStatus(true);
+                            console.log('Server health check: OK', data);
+                        });
+                    } else {
+                        serverAvailable = false;
+                        updateServerStatus(false);
+                        console.warn('Server health check failed:', response.status, response.statusText);
+                    }
+                })
+                .catch(error => {
+                    serverAvailable = false;
+                    updateServerStatus(false);
+                    const errorMsg = error.message || String(error);
+                    console.warn('Server not reachable:', errorMsg);
+                    
+                    // Provide helpful error message
+                    if (errorMsg.includes('Failed to fetch') || errorMsg.includes('NetworkError')) {
+                        const statusText = document.getElementById('server-status-text');
+                        if (statusText) {
+                            statusText.textContent = '✗ Server not running - Start: python3 route_api_server.py';
+                        }
+                    }
+                });
+        }
+        
+        // Check server on page load (with a small delay to ensure page is loaded)
+        setTimeout(checkServerConnection, 500);
+        
+        // Recheck server status periodically
+        setInterval(checkServerConnection, 10000); // Check every 10 seconds
+        
+        function searchPorts(query, callback) {
+            if (!query || query.length < 2) {
+                callback([]);
+                return;
+            }
+            
+            fetch(`${API_URL}/api/search-ports?q=${encodeURIComponent(query)}&limit=8`)
+                .then(response => {
+                    if (!response.ok) {
+                        // If response is not OK, try to get error message
+                        return response.json().then(data => {
+                            console.error('API error:', data.error || 'Unknown error');
+                            serverAvailable = false;
+                            return [];
+                        }).catch(() => {
+                            serverAvailable = false;
+                            updateServerStatus(false);
+                            return [];
+                        });
+                    }
+                    serverAvailable = true;
+                    updateServerStatus(true);
+                    return response.json();
+                })
+                .then(data => {
+                    // Check if data is an array (success) or error object
+                    if (Array.isArray(data)) {
+                        callback(data);
+                    } else if (data && data.error) {
+                        console.error('Search error:', data.error);
+                        callback([]);
+                    } else {
+                        callback([]);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error searching ports:', error);
+                    serverAvailable = false;
+                    updateServerStatus(false);
+                    callback([]);
+                    // Show user-friendly message if server is down
+                    if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
+                        const statusDiv = document.getElementById('status');
+                        if (statusDiv && !statusDiv.textContent.includes('server')) {
+                            statusDiv.textContent = '⚠️ Server not running. Start with: python3 route_api_server.py';
+                            statusDiv.style.color = '#ff9800';
+                        }
+                    }
+                });
+        }
+        
+        function showSuggestions(input, container) {
+            const query = input.value.trim();
+            
+            if (query.length < 2) {
+                container.classList.remove('show');
+                return;
+            }
+            
+            // Debounce search
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                searchPorts(query, (ports) => {
+                    if (ports.length === 0) {
+                        container.classList.remove('show');
+                        return;
+                    }
+                    
+                    container.innerHTML = '';
+                    ports.forEach(port => {
+                        const item = document.createElement('div');
+                        item.className = 'autocomplete-item';
+                        
+                        const name = port.name || '';
+                        const country = port.country || '';
+                        const alternate = port.alternate || '';
+                        
+                        // Highlight matching text
+                        const highlightedName = highlightMatch(name, query);
+                        
+                        item.innerHTML = `
+                            <div>
+                                <strong>${highlightedName}</strong>
+                                ${country ? `<span class="country">(${country})</span>` : ''}
+                            </div>
+                            ${alternate ? `<div class="coordinates">Alt: ${alternate}</div>` : ''}
+                        `;
+                        
+                        item.addEventListener('click', () => {
+                            input.value = name;
+                            container.classList.remove('show');
+                            input.focus();
+                        });
+                        
+                        container.appendChild(item);
+                    });
+                    
+                    container.classList.add('show');
+                });
+            }, 300); // 300ms debounce
+        }
+        
+        function highlightMatch(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+        
+        // Setup autocomplete for origin port
+        const originInput = document.getElementById('originPort');
+        const originSuggestions = document.getElementById('originSuggestions');
+        
+        originInput.addEventListener('input', () => {
+            showSuggestions(originInput, originSuggestions);
+        });
+        
+        originInput.addEventListener('focus', () => {
+            if (originInput.value.trim().length >= 2) {
+                showSuggestions(originInput, originSuggestions);
+            }
+        });
+        
+        originInput.addEventListener('blur', () => {
+            // Delay hiding to allow clicks on suggestions
+            setTimeout(() => {
+                originSuggestions.classList.remove('show');
+            }, 200);
+        });
+        
+        // Setup autocomplete for destination port
+        const destInput = document.getElementById('destPort');
+        const destSuggestions = document.getElementById('destSuggestions');
+        
+        destInput.addEventListener('input', () => {
+            showSuggestions(destInput, destSuggestions);
+        });
+        
+        destInput.addEventListener('focus', () => {
+            if (destInput.value.trim().length >= 2) {
+                showSuggestions(destInput, destSuggestions);
+            }
+        });
+        
+        destInput.addEventListener('blur', () => {
+            // Delay hiding to allow clicks on suggestions
+            setTimeout(() => {
+                destSuggestions.classList.remove('show');
+            }, 200);
+        });
+        
+        // Allow Enter key to generate route
+        originInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                originSuggestions.classList.remove('show');
+                destInput.focus();
+            }
+        });
+        
+        destInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                destSuggestions.classList.remove('show');
+                generateRoute();
+            }
+        });
+        
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.autocomplete-container')) {
+                originSuggestions.classList.remove('show');
+                destSuggestions.classList.remove('show');
+            }
+        });
+        
+        // File input handler
+        document.getElementById('geojsonFile').addEventListener('change', function(e) {
+            const files = e.target.files;
+            for (let i = 0; i < files.length; i++) {
+                loadRouteFromFile(files[i]);
+            }
+        });
+        
+        // Initialize
+        updateRouteInfo();
+    </script>
+</body>
+</html>

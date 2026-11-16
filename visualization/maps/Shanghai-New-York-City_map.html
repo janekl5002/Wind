@@ -1,0 +1,2744 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_0097082f0db79addc51fa79cde59cf69 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    
+                    <style>
+                        .foliumtooltip {
+                            
+                        }
+                       .foliumtooltip table{
+                            margin: auto;
+                        }
+                        .foliumtooltip tr{
+                            text-align: left;
+                        }
+                        .foliumtooltip th{
+                            padding: 2px; padding-right: 8px;
+                        }
+                    </style>
+            
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+</head>
+<body>
+    
+    
+    <div style="position: fixed; 
+                bottom: 50px; right: 50px; width: 200px; height: auto; 
+                background-color: white; z-index:9999; font-size:12px;
+                border:2px solid grey; border-radius:5px; padding: 10px">
+    <h4>Wind Speed (m/s)</h4>
+    <p><span style="background-color:#e0f2f1; padding: 2px 5px;">&nbsp;</span> &lt; 0.5 (Calm)</p>
+    <p><span style="background-color:#4caf50; padding: 2px 5px;">&nbsp;</span> 0.5-3.3 (Light)</p>
+    <p><span style="background-color:#8bc34a; padding: 2px 5px;">&nbsp;</span> 3.3-7.9 (Gentle)</p>
+    <p><span style="background-color:#ffeb3b; padding: 2px 5px;">&nbsp;</span> 7.9-13.8 (Moderate)</p>
+    <p><span style="background-color:#ff9800; padding: 2px 5px;">&nbsp;</span> 13.8-20.7 (Fresh)</p>
+    <p><span style="background-color:#ff5722; padding: 2px 5px;">&nbsp;</span> 20.7-28.4 (Strong)</p>
+    <p><span style="background-color:#f44336; padding: 2px 5px;">&nbsp;</span> 28.4-38.0 (Near Gale)</p>
+    <p><span style="background-color:#9c27b0; padding: 2px 5px;">&nbsp;</span> &gt; 38.0 (Gale+)</p>
+    </div>
+    
+    
+            <div class="folium-map" id="map_0097082f0db79addc51fa79cde59cf69" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_0097082f0db79addc51fa79cde59cf69 = L.map(
+                "map_0097082f0db79addc51fa79cde59cf69",
+                {
+                    center: [35.9583335, 23.7416665],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 3,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f755d837e97283e4ca541c34262f1626 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_0097082f0db79addc51fa79cde59cf69);
+        
+    
+            var tile_layer_d2880df7a576294830f218fbaee93838 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca target=\"_blank\" href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca target=\"_blank\" href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_0097082f0db79addc51fa79cde59cf69);
+        
+    
+            var tile_layer_1ecdb1302656d6f276f6cf1f746f2b45 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca target=\"_blank\" href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca target=\"_blank\" href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_0097082f0db79addc51fa79cde59cf69);
+        
+    
+        function geo_json_3d495c70a74a6a4d8790a5de9c0ebe5a_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "blue", "opacity": 0.8, "weight": 4};
+            }
+        }
+
+        function geo_json_3d495c70a74a6a4d8790a5de9c0ebe5a_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_3d495c70a74a6a4d8790a5de9c0ebe5a = L.geoJson(null, {
+                onEachFeature: geo_json_3d495c70a74a6a4d8790a5de9c0ebe5a_onEachFeature,
+            
+                style: geo_json_3d495c70a74a6a4d8790a5de9c0ebe5a_styler,
+        });
+
+        function geo_json_3d495c70a74a6a4d8790a5de9c0ebe5a_add (data) {
+            geo_json_3d495c70a74a6a4d8790a5de9c0ebe5a
+                .addData(data)
+                .addTo(map_0097082f0db79addc51fa79cde59cf69);
+        }
+            geo_json_3d495c70a74a6a4d8790a5de9c0ebe5a_add({"features": [{"geometry": {"coordinates": [[[-74.0167, 40.7], [-74.0225, 40.698], [-74.063, 40.6465], [-74.0452, 40.6055], [-73.0277, 40.5353], [-71.8002, 40.4532], [-71.5561, 40.4483], [-71.29, 40.4213], [-69.5055, 40.2951], [-69.4373, 40.312], [-68.9045, 40.4133], [-68.8137, 40.4303], [-68.783, 40.436], [-64.6327, 41.223], [-62.7947, 41.5305], [-57.338, 42.2525], [-52.6045, 42.6047], [-52.5397, 42.6188], [-51.0402, 42.733], [-50.0017, 42.755], [-47.4933, 42.8075], [-44.6815, 42.8665], [-42.6183, 42.7963], [-40.0015, 42.707], [-38.3322, 42.65], [-37.6853, 42.5923], [-34.8635, 42.3403], [-31.9412, 42.0725], [-30.001, 41.7908], [-28.585, 41.585], [-25.565, 41.1253], [-20, 40.0003], [-14.2735, 38.442], [-13.7555, 38.2728], [-12.22, 37.771], [-12.0575, 37.7178], [-11.996, 37.6975], [-11.7365, 37.6128], [-11.1427, 37.4144], [-11.0657, 37.3935], [-10.8322, 37.3231], [-10.413, 37.1803], [-10.2375, 37.1228], [-10.1492, 37.094], [-9.596, 36.913], [-9.3866, 36.8391], [-9.3502, 36.8289], [-9.25, 36.8], [-9.1976, 36.7903], [-9.1362, 36.7723], [-8.9604, 36.7211], [-8.896, 36.714], [-8.8675, 36.707], [-8.626, 36.6485], [-8.4647, 36.608], [-8.2195, 36.5498], [-7.768, 36.44], [-7.2912, 36.3243], [-7.266, 36.3275], [-6.5805, 36.1518], [-6.5152, 36.136], [-6.263, 36.0746], [-6.095, 36.0335], [-5.8463, 35.9645], [-5.842, 35.9633], [-5.8413, 35.9631], [-5.8129, 35.9553], [-5.7649, 35.9531], [-5.7095, 35.952], [-5.4569, 35.9638], [-5.3807, 35.9734], [-5.345, 35.9747], [-5.2717, 35.9778], [-5.2204, 35.9772], [-4.994, 35.9911], [-4.958, 35.9878], [-4.7255, 35.9988], [-4.687, 35.9979], [-3.7935, 36.1395], [-3.6775, 36.1549], [-3.304, 36.2148], [-3.2642, 36.221], [-2.624, 36.3275], [-2.5944, 36.3179], [-2.3525, 36.3566], [-2.29, 36.3708], [-2.2533, 36.373], [-2.2165, 36.382], [-1.9427, 36.4243], [-1.7535, 36.4532], [-1.6245, 36.4733], [-0.366, 36.6718], [-0.2677, 36.6867], [-0.1347, 36.704], [0.3843, 36.7835], [0.6055, 36.8615], [0.7843, 36.845], [1.396, 36.9388], [2.651, 37.131], [3.005, 37.1803], [3.1, 37.2013], [3.747, 37.2295], [4.65, 37.2705], [4.7458, 37.2748], [5.283, 37.2993], [6.2585, 37.3435], [6.3968, 37.35], [6.5893, 37.3585], [6.8568, 37.3824], [7.5, 37.4], [9.5323, 37.4616], [9.7625, 37.4728], [10.3728, 37.4855], [10.5243, 37.4891], [10.6683, 37.4905], [10.7155, 37.492], [10.941, 37.4988], [11.003, 37.4923], [11.0676, 37.4767], [11.1831, 37.4636], [11.2793, 37.4254], [11.3383, 37.4083], [11.6296, 37.328], [11.8143, 37.2827], [11.9565, 37.2283], [12.0125, 37.1996], [12.0899, 37.1896], [12.1556, 37.1851], [12.3043, 37.1585], [12.6205, 37.0755], [12.6938, 37.0529], [12.9155, 36.9983], [13.0505, 36.9645], [13.2635, 36.9073], [13.3625, 36.8813], [13.5744, 36.8307], [13.682, 36.7978], [13.775, 36.7753], [13.8733, 36.7473], [13.94, 36.7305], [14.1258, 36.6746], [14.1655, 36.6715], [14.2243, 36.6659], [14.2738, 36.6434], [14.3828, 36.615], [14.6558, 36.5438], [14.737, 36.5225], [14.7754, 36.5125], [14.818, 36.5013], [14.9483, 36.4743], [15.0143, 36.4511], [15.204, 36.3995], [15.539, 36.3305], [15.673, 36.2995], [15.753, 36.2865], [15.926, 36.251], [16.7265, 36.087], [17.194, 35.991], [17.902, 35.8458], [18.9025, 35.6405], [21.069, 35.196], [23.0026, 34.8074], [24.036, 34.4705], [24.9267, 34.1875], [25.4788, 34.012], [26.311, 33.7473], [27.9275, 33.2195], [28.2125, 33.1158], [28.9055, 32.8635], [30.43, 32.3028], [30.8715, 32.1475], [31.9738, 31.746], [31.9993, 31.727], [32.0353, 31.7003], [32.1815, 31.584], [32.3795, 31.3048], [32.3155, 31.1253], [32.338, 30.686], [32.303, 30.5663], [32.3795, 30.338], [32.5605, 30.2088], [32.5878, 29.9743], [32.5613, 29.9315], [32.5763, 29.6825], [32.5888, 29.557], [32.8288, 29.0728], [33.192, 28.4373], [33.5028, 28.1175], [33.9815, 27.6325], [34.2235, 27.3335], [34.5525, 26.9038], [35.0284, 26.2818], [35.4875, 25.6575], [37, 23.6], [38.6415, 21.1383], [38.9053, 20.7403], [39.335, 19.9085], [41.245, 16.2273], [41.2597, 16.203], [41.3775, 16.0118], [42.0219, 14.9619], [42.0782, 14.8623], [42.4925, 14.1283], [43.0073, 13.2104], [43.047, 13.1533], [43.4653, 12.633], [43.6053, 12.5753], [44.73, 12.1115], [44.898, 12.0422], [45.0005, 12], [50.9472, 12.264], [52.3005, 11.5998], [60.0005, 10], [65.0002, 10.0368], [65.062, 10.0276], [65.1045, 10.0068], [68.8958, 8.9175], [69.6746, 8.6816], [70, 8.5918], [70.8193, 8.365], [75.9555, 6.97], [79.5668, 5.9515], [80.0998, 5.8003], [81.8998, 5.8995], [90, 6.4665], [94, 6.7], [97, 7], [100.6395, 3.1668], [100.922, 2.9265], [101.1493, 2.735], [101.9743, 2.023], [102.8928, 1.498], [103.6, 1.1003], [103.8908, 1.1815], [104.4776, 1.4418], [104.5445, 1.479], [104.5848, 1.5673], [104.6953, 1.8118], [106.4688, 5.7275], [107.3208, 7.609], [109.77, 11.655], [110.1, 12.2], [111.811, 16.3785], [112.047, 16.9535], [113.1995, 19.6188], [114.1136, 21.7053], [116.9708, 22.987], [116.9965, 22.9985], [118.3443, 24.21], [118.462, 24.3158], [120, 25.7], [121.3, 27.8], [122.2245, 29.8365], [122.3663, 30.1485], [122.6775, 30.8345], [122.7495, 30.985], [122.3423, 31.039], [121.8195, 31.2015], [121.7063, 31.3345], [121.581, 31.3963], [121.4995, 31.3825], [121.5645, 31.2813], [121.4838, 31.2398], [121.5, 31.2167]]], "type": "MultiLineString"}, "id": "1000", "properties": {"dFromKM": 2.99, "dToKM": 0.54, "distKM": "23024.23", "dlat": "40.7", "dlon": "-74.016667", "olat": "31.216667", "olon": "121.5", "route name": "Shanghai-New-York-City"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+    geo_json_3d495c70a74a6a4d8790a5de9c0ebe5a.bindTooltip(
+    function(layer){
+    let div = L.DomUtil.create('div');
+    
+    let handleObject = feature=>typeof(feature)=='object' ? JSON.stringify(feature) : feature;
+    let fields = ["route name", "distKM"];
+    let aliases = ["Route:", "Distance:"];
+    let table = '<table>' +
+        String(
+        fields.map(
+        (v,i)=>
+        `<tr>
+            <th>${aliases[i].toLocaleString()}</th>
+            
+            <td>${handleObject(layer.feature.properties[v]).toLocaleString()}</td>
+        </tr>`).join(''))
+    +'</table>';
+    div.innerHTML=table;
+    
+    return div
+    }
+    ,{"className": "foliumtooltip", "sticky": true});
+                     
+    
+        var popup_7a3c63443b6bfe2a7571d535625210d5 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_a3b28468dcc1758fda46a292a2840b97 = $(`<div id="html_a3b28468dcc1758fda46a292a2840b97" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Shanghai-New-York-City</h4>             <p><b>Distance:</b> 23024.23</p>             <p><b>Origin:</b> (31.2167, 121.5000)</p>             <p><b>Destination:</b> (40.7000, -74.0167)</p>             <p><small>Snap distances: From=2.99km, To=0.54km</small></p>         </div>         </div>`)[0];
+                popup_7a3c63443b6bfe2a7571d535625210d5.setContent(html_a3b28468dcc1758fda46a292a2840b97);
+            
+        
+
+        geo_json_3d495c70a74a6a4d8790a5de9c0ebe5a.bindPopup(popup_7a3c63443b6bfe2a7571d535625210d5)
+        ;
+
+        
+    
+    
+            var feature_group_716240961aa50f7b53bdd46764162169 = L.featureGroup(
+                {}
+            ).addTo(map_0097082f0db79addc51fa79cde59cf69);
+        
+    
+            var circle_marker_c6e7c60c7a8e2cd7ffffeb441bc61ffe = L.circleMarker(
+                [40.7, -74.0167],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_8e2603d38100bf7776422f2202191c50 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_eb3dfc96f5f99303e21208e2339f5954 = $(`<div id="html_eb3dfc96f5f99303e21208e2339f5954" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -74.0167, 40.7000</p>             <p><b>Distance:</b> 0.0 km</p>             <hr>             <p><b>Wind Speed:</b> 17.98 m/s</p>             <p><small>Max: 32.40 m/s | Min: 1.60 m/s</small></p>             <p><b>Wind Direction:</b> 239°</p>         </div>         </div>`)[0];
+                popup_8e2603d38100bf7776422f2202191c50.setContent(html_eb3dfc96f5f99303e21208e2339f5954);
+            
+        
+
+        circle_marker_c6e7c60c7a8e2cd7ffffeb441bc61ffe.bindPopup(popup_8e2603d38100bf7776422f2202191c50)
+        ;
+
+        
+    
+    
+            circle_marker_c6e7c60c7a8e2cd7ffffeb441bc61ffe.bindTooltip(
+                `<div>
+                     Wind: 18.0 m/s @ 239°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_ec9320c4287ed7815fd4aa64af7c9fbc = L.polyline(
+                [[40.7, -74.0167], [40.95901350468657, -73.45257553068069]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_ec9320c4287ed7815fd4aa64af7c9fbc.bindTooltip(
+                `<div>
+                     Wind: 18.0 m/s @ 239°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_d024398af9497f49eabc57170529fabb = L.circleMarker(
+                [40.95901350468657, -73.45257553068069],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_eb42ababb246a782887a7eac6305601f = L.circleMarker(
+                [40.4532, -71.8002],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f44336", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_dfa5de222e863a7539a76244ed1f0b60 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_1040a6c152d4383dbc20280ea7da7dbf = $(`<div id="html_1040a6c152d4383dbc20280ea7da7dbf" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -71.8002, 40.4532</p>             <p><b>Distance:</b> 202.5 km</p>             <hr>             <p><b>Wind Speed:</b> 36.16 m/s</p>             <p><small>Max: 72.60 m/s | Min: 4.80 m/s</small></p>             <p><b>Wind Direction:</b> 245°</p>         </div>         </div>`)[0];
+                popup_dfa5de222e863a7539a76244ed1f0b60.setContent(html_1040a6c152d4383dbc20280ea7da7dbf);
+            
+        
+
+        circle_marker_eb42ababb246a782887a7eac6305601f.bindPopup(popup_dfa5de222e863a7539a76244ed1f0b60)
+        ;
+
+        
+    
+    
+            circle_marker_eb42ababb246a782887a7eac6305601f.bindTooltip(
+                `<div>
+                     Wind: 36.2 m/s @ 245°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_08c25c8d409bf47992ceb59764140362 = L.polyline(
+                [[40.4532, -71.8002], [40.66213353690054, -71.20323261348516]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_08c25c8d409bf47992ceb59764140362.bindTooltip(
+                `<div>
+                     Wind: 36.2 m/s @ 245°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_3607323f10ab85db6795da96f3c7df45 = L.circleMarker(
+                [40.66213353690054, -71.20323261348516],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_bec47a5a34b4b3a3461c0298111d69f9 = L.circleMarker(
+                [40.2951, -69.5055],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f44336", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_492b77765d5aa224ede1c4b1b0adb54c = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_44331d55c9aa380c10de1fd6a184e588 = $(`<div id="html_44331d55c9aa380c10de1fd6a184e588" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -69.5055, 40.2951</p>             <p><b>Distance:</b> 397.7 km</p>             <hr>             <p><b>Wind Speed:</b> 35.54 m/s</p>             <p><small>Max: 77.60 m/s | Min: 3.20 m/s</small></p>             <p><b>Wind Direction:</b> 245°</p>         </div>         </div>`)[0];
+                popup_492b77765d5aa224ede1c4b1b0adb54c.setContent(html_44331d55c9aa380c10de1fd6a184e588);
+            
+        
+
+        circle_marker_bec47a5a34b4b3a3461c0298111d69f9.bindPopup(popup_492b77765d5aa224ede1c4b1b0adb54c)
+        ;
+
+        
+    
+    
+            circle_marker_bec47a5a34b4b3a3461c0298111d69f9.bindTooltip(
+                `<div>
+                     Wind: 35.5 m/s @ 245°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_6cf80a5e372cb987702db62bf6c30445 = L.polyline(
+                [[40.2951, -69.5055], [40.50798964578254, -68.91234475758532]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_6cf80a5e372cb987702db62bf6c30445.bindTooltip(
+                `<div>
+                     Wind: 35.5 m/s @ 245°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_7c2720ce463939a22fc37f6d30ea9f60 = L.circleMarker(
+                [40.50798964578254, -68.91234475758532],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_20613994a44708c8617fda588a164583 = L.circleMarker(
+                [41.223, -64.6327],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9c27b0", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_c692140a112dcb72318c2b07439abf8b = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_d089f02e4e6b7b62a55cf4879bef8898 = $(`<div id="html_d089f02e4e6b7b62a55cf4879bef8898" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -64.6327, 41.2230</p>             <p><b>Distance:</b> 820.9 km</p>             <hr>             <p><b>Wind Speed:</b> 41.15 m/s</p>             <p><small>Max: 94.40 m/s | Min: 10.40 m/s</small></p>             <p><b>Wind Direction:</b> 245°</p>         </div>         </div>`)[0];
+                popup_c692140a112dcb72318c2b07439abf8b.setContent(html_d089f02e4e6b7b62a55cf4879bef8898);
+            
+        
+
+        circle_marker_20613994a44708c8617fda588a164583.bindPopup(popup_c692140a112dcb72318c2b07439abf8b)
+        ;
+
+        
+    
+    
+            circle_marker_20613994a44708c8617fda588a164583.bindTooltip(
+                `<div>
+                     Wind: 41.1 m/s @ 245°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_e11a152974f83e7d1b2a6265db2d12e6 = L.polyline(
+                [[41.223, -64.6327], [41.432726041223084, -64.02924526658381]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_e11a152974f83e7d1b2a6265db2d12e6.bindTooltip(
+                `<div>
+                     Wind: 41.1 m/s @ 245°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_f8d483962d0f23dfdbe43c34b5d183d7 = L.circleMarker(
+                [41.432726041223084, -64.02924526658381],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_4a67d80e9137fc1a21b345fec0f88ecb = L.circleMarker(
+                [42.2525, -57.338],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9c27b0", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_e8106f35fb90bf1421d06a5eb1359143 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_dbbab910875cf877067cd101d84b6258 = $(`<div id="html_dbbab910875cf877067cd101d84b6258" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -57.3380, 42.2525</p>             <p><b>Distance:</b> 1436.7 km</p>             <hr>             <p><b>Wind Speed:</b> 46.00 m/s</p>             <p><small>Max: 92.10 m/s | Min: 7.90 m/s</small></p>             <p><b>Wind Direction:</b> 258°</p>         </div>         </div>`)[0];
+                popup_e8106f35fb90bf1421d06a5eb1359143.setContent(html_dbbab910875cf877067cd101d84b6258);
+            
+        
+
+        circle_marker_4a67d80e9137fc1a21b345fec0f88ecb.bindPopup(popup_e8106f35fb90bf1421d06a5eb1359143)
+        ;
+
+        
+    
+    
+            circle_marker_4a67d80e9137fc1a21b345fec0f88ecb.bindTooltip(
+                `<div>
+                     Wind: 46.0 m/s @ 258°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_57b98409eed243c28d2f5caae056ea28 = L.polyline(
+                [[42.2525, -57.338], [42.35816239822769, -56.67775229800357]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_57b98409eed243c28d2f5caae056ea28.bindTooltip(
+                `<div>
+                     Wind: 46.0 m/s @ 258°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_b8a68268aad3f6d2ddb5fdde5f43386a = L.circleMarker(
+                [42.35816239822769, -56.67775229800357],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_3f045495118287c0134241f637e87ba2 = L.circleMarker(
+                [42.6047, -52.6045],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9c27b0", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_7804425a3d93768a0f1fa24d6657c943 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_5b039266a2f294ba718f9304361456e9 = $(`<div id="html_5b039266a2f294ba718f9304361456e9" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -52.6045, 42.6047</p>             <p><b>Distance:</b> 1827.1 km</p>             <hr>             <p><b>Wind Speed:</b> 47.30 m/s</p>             <p><small>Max: 89.60 m/s | Min: 1.50 m/s</small></p>             <p><b>Wind Direction:</b> 256°</p>         </div>         </div>`)[0];
+                popup_7804425a3d93768a0f1fa24d6657c943.setContent(html_5b039266a2f294ba718f9304361456e9);
+            
+        
+
+        circle_marker_3f045495118287c0134241f637e87ba2.bindPopup(popup_7804425a3d93768a0f1fa24d6657c943)
+        ;
+
+        
+    
+    
+            circle_marker_3f045495118287c0134241f637e87ba2.bindTooltip(
+                `<div>
+                     Wind: 47.3 m/s @ 256°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_673db377486fc3c73436a8135f10ceaa = L.polyline(
+                [[42.6047, -52.6045], [42.72311907303281, -51.94451748505062]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_673db377486fc3c73436a8135f10ceaa.bindTooltip(
+                `<div>
+                     Wind: 47.3 m/s @ 256°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_61b735d4fa41abf68844c99eccca2271 = L.circleMarker(
+                [42.72311907303281, -51.94451748505062],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_ceb9e5b26b14245fc17c0fb5b6e76577 = L.circleMarker(
+                [42.755, -50.0017],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_49e4bb24dd6b80d14fc479f3ab22ce50 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_75e7de310f713a0fcb4da212a71c15eb = $(`<div id="html_75e7de310f713a0fcb4da212a71c15eb" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -50.0017, 42.7550</p>             <p><b>Distance:</b> 2040.7 km</p>             <hr>             <p><b>Wind Speed:</b> 26.78 m/s</p>             <p><small>Max: 61.50 m/s | Min: 1.10 m/s</small></p>             <p><b>Wind Direction:</b> 233°</p>         </div>         </div>`)[0];
+                popup_49e4bb24dd6b80d14fc479f3ab22ce50.setContent(html_75e7de310f713a0fcb4da212a71c15eb);
+            
+        
+
+        circle_marker_ceb9e5b26b14245fc17c0fb5b6e76577.bindPopup(popup_49e4bb24dd6b80d14fc479f3ab22ce50)
+        ;
+
+        
+    
+    
+            circle_marker_ceb9e5b26b14245fc17c0fb5b6e76577.bindTooltip(
+                `<div>
+                     Wind: 26.8 m/s @ 233°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_c110c5aea55b888ad1eca43064f9fd48 = L.polyline(
+                [[42.755, -50.0017], [43.054511799257796, -49.45643823657289]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_c110c5aea55b888ad1eca43064f9fd48.bindTooltip(
+                `<div>
+                     Wind: 26.8 m/s @ 233°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_fe8678b20498dc709e4a27d6098295e8 = L.circleMarker(
+                [43.054511799257796, -49.45643823657289],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_46d51d8c568afe059862b93346178f68 = L.circleMarker(
+                [42.8075, -47.4933],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9c27b0", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_6bf92cf96c63ef369f69a72393654aaa = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_7593fded0ac99f2a3451cc0abce24be2 = $(`<div id="html_7593fded0ac99f2a3451cc0abce24be2" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -47.4933, 42.8075</p>             <p><b>Distance:</b> 2245.5 km</p>             <hr>             <p><b>Wind Speed:</b> 43.80 m/s</p>             <p><small>Max: 75.20 m/s | Min: 3.70 m/s</small></p>             <p><b>Wind Direction:</b> 255°</p>         </div>         </div>`)[0];
+                popup_6bf92cf96c63ef369f69a72393654aaa.setContent(html_7593fded0ac99f2a3451cc0abce24be2);
+            
+        
+
+        circle_marker_46d51d8c568afe059862b93346178f68.bindPopup(popup_6bf92cf96c63ef369f69a72393654aaa)
+        ;
+
+        
+    
+    
+            circle_marker_46d51d8c568afe059862b93346178f68.bindTooltip(
+                `<div>
+                     Wind: 43.8 m/s @ 255°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_f2092337dc14c0394bd725185666db7f = L.polyline(
+                [[42.8075, -47.4933], [42.9343789722924, -46.83407576169122]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_f2092337dc14c0394bd725185666db7f.bindTooltip(
+                `<div>
+                     Wind: 43.8 m/s @ 255°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_33b39ea5cb9c71cc194066bb076405df = L.circleMarker(
+                [42.9343789722924, -46.83407576169122],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_233527ff6cb0044e73bab26b9e570417 = L.circleMarker(
+                [42.8665, -44.6815],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9c27b0", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_cb2f3de25f6164acc7fd2a1d21a9d3fd = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_db39c85cd6d5189fb133eafe5264fe88 = $(`<div id="html_db39c85cd6d5189fb133eafe5264fe88" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -44.6815, 42.8665</p>             <p><b>Distance:</b> 2474.8 km</p>             <hr>             <p><b>Wind Speed:</b> 47.13 m/s</p>             <p><small>Max: 77.00 m/s | Min: 5.40 m/s</small></p>             <p><b>Wind Direction:</b> 265°</p>         </div>         </div>`)[0];
+                popup_cb2f3de25f6164acc7fd2a1d21a9d3fd.setContent(html_db39c85cd6d5189fb133eafe5264fe88);
+            
+        
+
+        circle_marker_233527ff6cb0044e73bab26b9e570417.bindPopup(popup_cb2f3de25f6164acc7fd2a1d21a9d3fd)
+        ;
+
+        
+    
+    
+            circle_marker_233527ff6cb0044e73bab26b9e570417.bindTooltip(
+                `<div>
+                     Wind: 47.1 m/s @ 265°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_665b0eab0d24041049181a1e8c079824 = L.polyline(
+                [[42.8665, -44.6815], [42.91094714843322, -44.00201736567242]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_665b0eab0d24041049181a1e8c079824.bindTooltip(
+                `<div>
+                     Wind: 47.1 m/s @ 265°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_9afb18bbbd048dd9c16b5390e6a8ad04 = L.circleMarker(
+                [42.91094714843322, -44.00201736567242],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_90d86a94ebb22768ce6e359676b00fc9 = L.circleMarker(
+                [42.707, -40.0015],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9c27b0", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_4513f34f4ba1d661aab27bcc7f82d440 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_a84dffb7a44793baf48907877c1f3110 = $(`<div id="html_a84dffb7a44793baf48907877c1f3110" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -40.0015, 42.7070</p>             <p><b>Distance:</b> 2857.2 km</p>             <hr>             <p><b>Wind Speed:</b> 47.33 m/s</p>             <p><small>Max: 70.90 m/s | Min: 9.50 m/s</small></p>             <p><b>Wind Direction:</b> 271°</p>         </div>         </div>`)[0];
+                popup_4513f34f4ba1d661aab27bcc7f82d440.setContent(html_a84dffb7a44793baf48907877c1f3110);
+            
+        
+
+        circle_marker_90d86a94ebb22768ce6e359676b00fc9.bindPopup(popup_4513f34f4ba1d661aab27bcc7f82d440)
+        ;
+
+        
+    
+    
+            circle_marker_90d86a94ebb22768ce6e359676b00fc9.bindTooltip(
+                `<div>
+                     Wind: 47.3 m/s @ 271°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_88173ab0c8e6a8837c498831e26c6d34 = L.polyline(
+                [[42.707, -40.0015], [42.69827379678136, -39.32117575361724]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_88173ab0c8e6a8837c498831e26c6d34.bindTooltip(
+                `<div>
+                     Wind: 47.3 m/s @ 271°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_400ca2e620a207c70c830bf7cb175dd0 = L.circleMarker(
+                [42.69827379678136, -39.32117575361724],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_f208fcd1f6658161df4064a6fb9a0cb3 = L.circleMarker(
+                [42.5923, -37.6853],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9c27b0", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_172c5c30834027cd8b447d03578da81c = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_cf8769d2d40926efca1e98ee3db53860 = $(`<div id="html_cf8769d2d40926efca1e98ee3db53860" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -37.6853, 42.5923</p>             <p><b>Distance:</b> 3047.1 km</p>             <hr>             <p><b>Wind Speed:</b> 49.55 m/s</p>             <p><small>Max: 68.40 m/s | Min: 29.20 m/s</small></p>             <p><b>Wind Direction:</b> 269°</p>         </div>         </div>`)[0];
+                popup_172c5c30834027cd8b447d03578da81c.setContent(html_cf8769d2d40926efca1e98ee3db53860);
+            
+        
+
+        circle_marker_f208fcd1f6658161df4064a6fb9a0cb3.bindPopup(popup_172c5c30834027cd8b447d03578da81c)
+        ;
+
+        
+    
+    
+            circle_marker_f208fcd1f6658161df4064a6fb9a0cb3.bindTooltip(
+                `<div>
+                     Wind: 49.5 m/s @ 269°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_1489f498d6d46dded91dd8f002de3383 = L.polyline(
+                [[42.5923, -37.6853], [42.59840850041763, -37.00617638817608]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_1489f498d6d46dded91dd8f002de3383.bindTooltip(
+                `<div>
+                     Wind: 49.5 m/s @ 269°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_93f6ec575dd6235b1c3847df99e53df8 = L.circleMarker(
+                [42.59840850041763, -37.00617638817608],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_0741d36460272635ab759e908ae79f8d = L.circleMarker(
+                [42.3403, -34.8635],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9c27b0", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_746f3bbc66935d56e80efa7c75fa6d6d = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_6da3267f2778a0639b20b6c719555898 = $(`<div id="html_6da3267f2778a0639b20b6c719555898" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -34.8635, 42.3403</p>             <p><b>Distance:</b> 3280.2 km</p>             <hr>             <p><b>Wind Speed:</b> 47.86 m/s</p>             <p><small>Max: 65.20 m/s | Min: 20.60 m/s</small></p>             <p><b>Wind Direction:</b> 266°</p>         </div>         </div>`)[0];
+                popup_746f3bbc66935d56e80efa7c75fa6d6d.setContent(html_6da3267f2778a0639b20b6c719555898);
+            
+        
+
+        circle_marker_0741d36460272635ab759e908ae79f8d.bindPopup(popup_746f3bbc66935d56e80efa7c75fa6d6d)
+        ;
+
+        
+    
+    
+            circle_marker_0741d36460272635ab759e908ae79f8d.bindTooltip(
+                `<div>
+                     Wind: 47.9 m/s @ 266°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_95a307ff7985980bddcda52ae099090a = L.polyline(
+                [[42.3403, -34.8635], [42.37256615412648, -34.18846418653413]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_95a307ff7985980bddcda52ae099090a.bindTooltip(
+                `<div>
+                     Wind: 47.9 m/s @ 266°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_027598d6b2d6e020ce75fc09c6dd5ac1 = L.circleMarker(
+                [42.37256615412648, -34.18846418653413],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_4a9e9e43b86c6fd893972a5fe271358a = L.circleMarker(
+                [42.0725, -31.9412],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9c27b0", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_408de2ea1bfc715de7acf59a23d49d4a = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_85d89bc24ca1282a5983f39b77246630 = $(`<div id="html_85d89bc24ca1282a5983f39b77246630" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -31.9412, 42.0725</p>             <p><b>Distance:</b> 3522.7 km</p>             <hr>             <p><b>Wind Speed:</b> 50.31 m/s</p>             <p><small>Max: 72.30 m/s | Min: 15.30 m/s</small></p>             <p><b>Wind Direction:</b> 266°</p>         </div>         </div>`)[0];
+                popup_408de2ea1bfc715de7acf59a23d49d4a.setContent(html_85d89bc24ca1282a5983f39b77246630);
+            
+        
+
+        circle_marker_4a9e9e43b86c6fd893972a5fe271358a.bindPopup(popup_408de2ea1bfc715de7acf59a23d49d4a)
+        ;
+
+        
+    
+    
+            circle_marker_4a9e9e43b86c6fd893972a5fe271358a.bindTooltip(
+                `<div>
+                     Wind: 50.3 m/s @ 266°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_a503fb101f596ea8edf1f752e4c20c55 = L.polyline(
+                [[42.0725, -31.9412], [42.10650764533262, -31.26917548902704]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_a503fb101f596ea8edf1f752e4c20c55.bindTooltip(
+                `<div>
+                     Wind: 50.3 m/s @ 266°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_fc745222c14a966c92cc3bd7bbc52d62 = L.circleMarker(
+                [42.10650764533262, -31.26917548902704],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_5065c7ee1c90a8e7c0a20a7b77b6e349 = L.circleMarker(
+                [41.585, -28.585],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9c27b0", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_7891b65af14c3a8c9558ae64aa1df0ac = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_cc1f2815c5ee9e628cbeae5fb053482e = $(`<div id="html_cc1f2815c5ee9e628cbeae5fb053482e" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -28.5850, 41.5850</p>             <p><b>Distance:</b> 3806.0 km</p>             <hr>             <p><b>Wind Speed:</b> 44.65 m/s</p>             <p><small>Max: 63.60 m/s | Min: 16.60 m/s</small></p>             <p><b>Wind Direction:</b> 264°</p>         </div>         </div>`)[0];
+                popup_7891b65af14c3a8c9558ae64aa1df0ac.setContent(html_cc1f2815c5ee9e628cbeae5fb053482e);
+            
+        
+
+        circle_marker_5065c7ee1c90a8e7c0a20a7b77b6e349.bindPopup(popup_7891b65af14c3a8c9558ae64aa1df0ac)
+        ;
+
+        
+    
+    
+            circle_marker_5065c7ee1c90a8e7c0a20a7b77b6e349.bindTooltip(
+                `<div>
+                     Wind: 44.6 m/s @ 264°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_1569402b3e295976bf471724baa46c56 = L.polyline(
+                [[41.585, -28.585], [41.63465987487182, -27.919830896650133]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_1569402b3e295976bf471724baa46c56.bindTooltip(
+                `<div>
+                     Wind: 44.6 m/s @ 264°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_9bb10e01d732a125ffb8ab5b1b594480 = L.circleMarker(
+                [41.63465987487182, -27.919830896650133],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_469c1c55c11117b5a595ac76793dd54e = L.circleMarker(
+                [41.1253, -25.565],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9c27b0", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_79ff524046e817e68049f8f75c179999 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_8803bcf153cb9b5cda36b6c64f062463 = $(`<div id="html_8803bcf153cb9b5cda36b6c64f062463" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -25.5650, 41.1253</p>             <p><b>Distance:</b> 4063.2 km</p>             <hr>             <p><b>Wind Speed:</b> 42.66 m/s</p>             <p><small>Max: 63.30 m/s | Min: 13.90 m/s</small></p>             <p><b>Wind Direction:</b> 266°</p>         </div>         </div>`)[0];
+                popup_79ff524046e817e68049f8f75c179999.setContent(html_8803bcf153cb9b5cda36b6c64f062463);
+            
+        
+
+        circle_marker_469c1c55c11117b5a595ac76793dd54e.bindPopup(popup_79ff524046e817e68049f8f75c179999)
+        ;
+
+        
+    
+    
+            circle_marker_469c1c55c11117b5a595ac76793dd54e.bindTooltip(
+                `<div>
+                     Wind: 42.7 m/s @ 266°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_832897c723610e4f03c4a207872a537c = L.polyline(
+                [[41.1253, -25.565], [41.16104872216635, -24.902928794546735]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_832897c723610e4f03c4a207872a537c.bindTooltip(
+                `<div>
+                     Wind: 42.7 m/s @ 266°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_5b756f3c5639d8710c19ba5235af5160 = L.circleMarker(
+                [41.16104872216635, -24.902928794546735],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_30c1e88f52876bef71d53dc777bf28f8 = L.circleMarker(
+                [40.0003, -20.0],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f44336", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_6f4b7ac8796438f12f51c76e069adf4d = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_392e7fee5a3f326b29ce5eff2a794558 = $(`<div id="html_392e7fee5a3f326b29ce5eff2a794558" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -20.0000, 40.0003</p>             <p><b>Distance:</b> 4549.6 km</p>             <hr>             <p><b>Wind Speed:</b> 35.12 m/s</p>             <p><small>Max: 62.40 m/s | Min: 8.30 m/s</small></p>             <p><b>Wind Direction:</b> 273°</p>         </div>         </div>`)[0];
+                popup_6f4b7ac8796438f12f51c76e069adf4d.setContent(html_392e7fee5a3f326b29ce5eff2a794558);
+            
+        
+
+        circle_marker_30c1e88f52876bef71d53dc777bf28f8.bindPopup(popup_6f4b7ac8796438f12f51c76e069adf4d)
+        ;
+
+        
+    
+    
+            circle_marker_30c1e88f52876bef71d53dc777bf28f8.bindTooltip(
+                `<div>
+                     Wind: 35.1 m/s @ 273°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_97ecac07253f1aa3e1bb1980a72d2dde = L.polyline(
+                [[40.0003, -20.0], [39.9758751151022, -19.348072729580903]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_97ecac07253f1aa3e1bb1980a72d2dde.bindTooltip(
+                `<div>
+                     Wind: 35.1 m/s @ 273°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_657d4b51c9179c84c0fb417b15cf42c0 = L.circleMarker(
+                [39.9758751151022, -19.348072729580903],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_e7f063b6aa20f7ca51bb48c00947e99c = L.circleMarker(
+                [38.442, -14.2735],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_ca7488dd2fd654c9d485e26d0e6d2eb5 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_d6d2ea7fd6d0ba021ca9453885eb6e33 = $(`<div id="html_d6d2ea7fd6d0ba021ca9453885eb6e33" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -14.2735, 38.4420</p>             <p><b>Distance:</b> 5072.3 km</p>             <hr>             <p><b>Wind Speed:</b> 27.18 m/s</p>             <p><small>Max: 56.70 m/s | Min: 5.50 m/s</small></p>             <p><b>Wind Direction:</b> 279°</p>         </div>         </div>`)[0];
+                popup_ca7488dd2fd654c9d485e26d0e6d2eb5.setContent(html_d6d2ea7fd6d0ba021ca9453885eb6e33);
+            
+        
+
+        circle_marker_e7f063b6aa20f7ca51bb48c00947e99c.bindPopup(popup_ca7488dd2fd654c9d485e26d0e6d2eb5)
+        ;
+
+        
+    
+    
+            circle_marker_e7f063b6aa20f7ca51bb48c00947e99c.bindTooltip(
+                `<div>
+                     Wind: 27.2 m/s @ 279°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_253431b1b9f442dc1a118bfca9d71151 = L.polyline(
+                [[38.442, -14.2735], [38.362920966372755, -13.643159091198811]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_253431b1b9f442dc1a118bfca9d71151.bindTooltip(
+                `<div>
+                     Wind: 27.2 m/s @ 279°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_b41d4d1c9729c1bee83b12ad57f04525 = L.circleMarker(
+                [38.362920966372755, -13.643159091198811],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_0c4641e1efadcf0cac4fefbc11ec73b3 = L.circleMarker(
+                [37.771, -12.22],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_4388e39a4da37374e17991d4c7b6d38e = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_e19b242338a4eb046d8cfd220dacfe5f = $(`<div id="html_e19b242338a4eb046d8cfd220dacfe5f" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -12.2200, 37.7710</p>             <p><b>Distance:</b> 5266.9 km</p>             <hr>             <p><b>Wind Speed:</b> 23.94 m/s</p>             <p><small>Max: 53.60 m/s | Min: 1.50 m/s</small></p>             <p><b>Wind Direction:</b> 285°</p>         </div>         </div>`)[0];
+                popup_4388e39a4da37374e17991d4c7b6d38e.setContent(html_e19b242338a4eb046d8cfd220dacfe5f);
+            
+        
+
+        circle_marker_0c4641e1efadcf0cac4fefbc11ec73b3.bindPopup(popup_4388e39a4da37374e17991d4c7b6d38e)
+        ;
+
+        
+    
+    
+            circle_marker_0c4641e1efadcf0cac4fefbc11ec73b3.bindTooltip(
+                `<div>
+                     Wind: 23.9 m/s @ 285°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_0bd9856fcee48be87e928cdd82f8ea22 = L.polyline(
+                [[37.771, -12.22], [37.638221941256596, -11.61017208598154]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_0bd9856fcee48be87e928cdd82f8ea22.bindTooltip(
+                `<div>
+                     Wind: 23.9 m/s @ 285°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_94cd45cee6fdbdd714dff2c5fb2f8601 = L.circleMarker(
+                [37.638221941256596, -11.61017208598154],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_19dea5900ba797e3c01e9d35a33beef6 = L.circleMarker(
+                [37.3935, -11.0657],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_7f775d42b893f29b41ef7bfbb75a3fcc = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_829644245899338090c524d94772a154 = $(`<div id="html_829644245899338090c524d94772a154" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -11.0657, 37.3935</p>             <p><b>Distance:</b> 5376.9 km</p>             <hr>             <p><b>Wind Speed:</b> 22.86 m/s</p>             <p><small>Max: 50.90 m/s | Min: 0.50 m/s</small></p>             <p><b>Wind Direction:</b> 290°</p>         </div>         </div>`)[0];
+                popup_7f775d42b893f29b41ef7bfbb75a3fcc.setContent(html_829644245899338090c524d94772a154);
+            
+        
+
+        circle_marker_19dea5900ba797e3c01e9d35a33beef6.bindPopup(popup_7f775d42b893f29b41ef7bfbb75a3fcc)
+        ;
+
+        
+    
+    
+            circle_marker_19dea5900ba797e3c01e9d35a33beef6.bindTooltip(
+                `<div>
+                     Wind: 22.9 m/s @ 290°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_44057460484d8377eff650bd82b7f710 = L.polyline(
+                [[37.3935, -11.0657], [37.22577421512487, -10.472825869171018]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_44057460484d8377eff650bd82b7f710.bindTooltip(
+                `<div>
+                     Wind: 22.9 m/s @ 290°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_a67fa2ccde2a4c42e749fbdfba0adb35 = L.circleMarker(
+                [37.22577421512487, -10.472825869171018],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_075e7a1db86c00c8afc9fae1d453f94d = L.circleMarker(
+                [37.094, -10.1492],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_0b06368c5faba4959348d7a37014ce7c = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_638ea64bef591e8bc142326b80fc1826 = $(`<div id="html_638ea64bef591e8bc142326b80fc1826" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -10.1492, 37.0940</p>             <p><b>Distance:</b> 5464.6 km</p>             <hr>             <p><b>Wind Speed:</b> 23.50 m/s</p>             <p><small>Max: 52.50 m/s | Min: 1.00 m/s</small></p>             <p><b>Wind Direction:</b> 292°</p>         </div>         </div>`)[0];
+                popup_0b06368c5faba4959348d7a37014ce7c.setContent(html_638ea64bef591e8bc142326b80fc1826);
+            
+        
+
+        circle_marker_075e7a1db86c00c8afc9fae1d453f94d.bindPopup(popup_0b06368c5faba4959348d7a37014ce7c)
+        ;
+
+        
+    
+    
+            circle_marker_075e7a1db86c00c8afc9fae1d453f94d.bindTooltip(
+                `<div>
+                     Wind: 23.5 m/s @ 292°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_40fb4594ae262b25e5b60e3cb889fde3 = L.polyline(
+                [[37.094, -10.1492], [36.90265828381746, -9.570071998723504]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_40fb4594ae262b25e5b60e3cb889fde3.bindTooltip(
+                `<div>
+                     Wind: 23.5 m/s @ 292°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_4ab1609b561b33c6eade1d5aa8baa994 = L.circleMarker(
+                [36.90265828381746, -9.570071998723504],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_d048bc09c7bcac90d57351149c3b35b9 = L.circleMarker(
+                [36.8289, -9.3502],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_475bc805999c2390907f7356f51be209 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_83bcc11cba8590e47da407cdba1945f3 = $(`<div id="html_83bcc11cba8590e47da407cdba1945f3" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -9.3502, 36.8289</p>             <p><b>Distance:</b> 5541.5 km</p>             <hr>             <p><b>Wind Speed:</b> 23.17 m/s</p>             <p><small>Max: 46.40 m/s | Min: 0.80 m/s</small></p>             <p><b>Wind Direction:</b> 307°</p>         </div>         </div>`)[0];
+                popup_475bc805999c2390907f7356f51be209.setContent(html_83bcc11cba8590e47da407cdba1945f3);
+            
+        
+
+        circle_marker_d048bc09c7bcac90d57351149c3b35b9.bindPopup(popup_475bc805999c2390907f7356f51be209)
+        ;
+
+        
+    
+    
+            circle_marker_d048bc09c7bcac90d57351149c3b35b9.bindTooltip(
+                `<div>
+                     Wind: 23.2 m/s @ 307°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_a4bebfc8bbd44373fa804e191858a328 = L.polyline(
+                [[36.8289, -9.3502], [36.52660044256881, -8.852635695664056]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_a4bebfc8bbd44373fa804e191858a328.bindTooltip(
+                `<div>
+                     Wind: 23.2 m/s @ 307°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_f5615ac40102daa87c4be456c0304ead = L.circleMarker(
+                [36.52660044256881, -8.852635695664056],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_49a78ccb3732318497e22912fb3940d9 = L.circleMarker(
+                [36.6485, -8.626],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_d26e2d6e3600daa4543b226745181479 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_9b029ca87a4680b16642ecd7cee98ec4 = $(`<div id="html_9b029ca87a4680b16642ecd7cee98ec4" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -8.6260, 36.6485</p>             <p><b>Distance:</b> 5609.2 km</p>             <hr>             <p><b>Wind Speed:</b> 21.00 m/s</p>             <p><small>Max: 47.10 m/s | Min: 1.90 m/s</small></p>             <p><b>Wind Direction:</b> 319°</p>         </div>         </div>`)[0];
+                popup_d26e2d6e3600daa4543b226745181479.setContent(html_9b029ca87a4680b16642ecd7cee98ec4);
+            
+        
+
+        circle_marker_49a78ccb3732318497e22912fb3940d9.bindPopup(popup_d26e2d6e3600daa4543b226745181479)
+        ;
+
+        
+    
+    
+            circle_marker_49a78ccb3732318497e22912fb3940d9.bindTooltip(
+                `<div>
+                     Wind: 21.0 m/s @ 319°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_effa06f2ea0b17fa038f094a1d3ec296 = L.polyline(
+                [[36.6485, -8.626], [36.27171830384918, -8.216324685193976]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_effa06f2ea0b17fa038f094a1d3ec296.bindTooltip(
+                `<div>
+                     Wind: 21.0 m/s @ 319°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_96f8913f20494f8a97891fdc68cb51e9 = L.circleMarker(
+                [36.27171830384918, -8.216324685193976],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_fe935cd8c1d8d6139124228ef02be88b = L.circleMarker(
+                [36.3243, -7.2912],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_280a35416fb1c568b8a09ea5f9f2c273 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_30080d16971c3437f7d7b53c5bd33d5e = $(`<div id="html_30080d16971c3437f7d7b53c5bd33d5e" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -7.2912, 36.3243</p>             <p><b>Distance:</b> 5733.9 km</p>             <hr>             <p><b>Wind Speed:</b> 20.58 m/s</p>             <p><small>Max: 47.10 m/s | Min: 5.10 m/s</small></p>             <p><b>Wind Direction:</b> 340°</p>         </div>         </div>`)[0];
+                popup_280a35416fb1c568b8a09ea5f9f2c273.setContent(html_30080d16971c3437f7d7b53c5bd33d5e);
+            
+        
+
+        circle_marker_fe935cd8c1d8d6139124228ef02be88b.bindPopup(popup_280a35416fb1c568b8a09ea5f9f2c273)
+        ;
+
+        
+    
+    
+            circle_marker_fe935cd8c1d8d6139124228ef02be88b.bindTooltip(
+                `<div>
+                     Wind: 20.6 m/s @ 340°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_8f975f48f02b25bd948d96ee15aca910 = L.polyline(
+                [[36.3243, -7.2912], [35.8559639053758, -7.073862701319527]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_8f975f48f02b25bd948d96ee15aca910.bindTooltip(
+                `<div>
+                     Wind: 20.6 m/s @ 340°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_5e29b8437ba626c89bcbae9f8cf87840 = L.circleMarker(
+                [35.8559639053758, -7.073862701319527],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_a83182e1b1d2bde5f1f46204ed03566e = L.circleMarker(
+                [36.0746, -6.263],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_975a0f694745fbf19c34bbd0b6f808ab = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_8e0ffa3a2d063f6d9270b86c6953fdba = $(`<div id="html_8e0ffa3a2d063f6d9270b86c6953fdba" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -6.2630, 36.0746</p>             <p><b>Distance:</b> 5830.4 km</p>             <hr>             <p><b>Wind Speed:</b> 21.72 m/s</p>             <p><small>Max: 57.40 m/s | Min: 3.10 m/s</small></p>             <p><b>Wind Direction:</b> 359°</p>         </div>         </div>`)[0];
+                popup_975a0f694745fbf19c34bbd0b6f808ab.setContent(html_8e0ffa3a2d063f6d9270b86c6953fdba);
+            
+        
+
+        circle_marker_a83182e1b1d2bde5f1f46204ed03566e.bindPopup(popup_975a0f694745fbf19c34bbd0b6f808ab)
+        ;
+
+        
+    
+    
+            circle_marker_a83182e1b1d2bde5f1f46204ed03566e.bindTooltip(
+                `<div>
+                     Wind: 21.7 m/s @ 359°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_d10f35a1e45b334bfef8f054405d8570 = L.polyline(
+                [[36.0746, -6.263], [35.57466168375917, -6.253283143943972]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_d10f35a1e45b334bfef8f054405d8570.bindTooltip(
+                `<div>
+                     Wind: 21.7 m/s @ 359°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_7497e0c9790963710413a3bcbac16582 = L.circleMarker(
+                [35.57466168375917, -6.253283143943972],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_d3bb8b925709e479f4311efd009415d9 = L.circleMarker(
+                [35.9531, -5.7649],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_91b45000bab53eb662b7ab7fde58bdbc = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_93c2d2c44a5aa948b11381b08f26e481 = $(`<div id="html_93c2d2c44a5aa948b11381b08f26e481" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -5.7649, 35.9531</p>             <p><b>Distance:</b> 5877.4 km</p>             <hr>             <p><b>Wind Speed:</b> 18.84 m/s</p>             <p><small>Max: 52.60 m/s | Min: 0.80 m/s</small></p>             <p><b>Wind Direction:</b> 332°</p>         </div>         </div>`)[0];
+                popup_91b45000bab53eb662b7ab7fde58bdbc.setContent(html_93c2d2c44a5aa948b11381b08f26e481);
+            
+        
+
+        circle_marker_d3bb8b925709e479f4311efd009415d9.bindPopup(popup_91b45000bab53eb662b7ab7fde58bdbc)
+        ;
+
+        
+    
+    
+            circle_marker_d3bb8b925709e479f4311efd009415d9.bindTooltip(
+                `<div>
+                     Wind: 18.8 m/s @ 332°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_ce5d5cafb6b5bd62be6fbb56fb1cba61 = L.polyline(
+                [[35.9531, -5.7649], [35.51203656699116, -5.473971571255411]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_ce5d5cafb6b5bd62be6fbb56fb1cba61.bindTooltip(
+                `<div>
+                     Wind: 18.8 m/s @ 332°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_8cbf1844b2589426e0ac036ab8c354a2 = L.circleMarker(
+                [35.51203656699116, -5.473971571255411],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_a429b3ba7a56c1629459cb65d91886c7 = L.circleMarker(
+                [35.9911, -4.994],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_b157319962bdb46d75e4221566f83ce2 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_b30a6b53f8205deac993b035ec648751 = $(`<div id="html_b30a6b53f8205deac993b035ec648751" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -4.9940, 35.9911</p>             <p><b>Distance:</b> 5946.9 km</p>             <hr>             <p><b>Wind Speed:</b> 20.02 m/s</p>             <p><small>Max: 41.40 m/s | Min: 1.90 m/s</small></p>             <p><b>Wind Direction:</b> 314°</p>         </div>         </div>`)[0];
+                popup_b157319962bdb46d75e4221566f83ce2.setContent(html_b30a6b53f8205deac993b035ec648751);
+            
+        
+
+        circle_marker_a429b3ba7a56c1629459cb65d91886c7.bindPopup(popup_b157319962bdb46d75e4221566f83ce2)
+        ;
+
+        
+    
+    
+            circle_marker_a429b3ba7a56c1629459cb65d91886c7.bindTooltip(
+                `<div>
+                     Wind: 20.0 m/s @ 314°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_80745c7ee50f3d355a13c0e21e69b780 = L.polyline(
+                [[35.9911, -4.994], [35.64314360170385, -4.550223617674331]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_80745c7ee50f3d355a13c0e21e69b780.bindTooltip(
+                `<div>
+                     Wind: 20.0 m/s @ 314°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ddfaec3bb6f17f6df807df1772a98ac6 = L.circleMarker(
+                [35.64314360170385, -4.550223617674331],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_06efecd5377e1dfbcb125ea1c0c3ed88 = L.circleMarker(
+                [36.1549, -3.6775],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_c4fdc118cbf64a839fe6dc5ee61f8a1c = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_cfe56820bcfd8e37f01ffbce22dd2cdf = $(`<div id="html_cfe56820bcfd8e37f01ffbce22dd2cdf" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -3.6775, 36.1549</p>             <p><b>Distance:</b> 6067.0 km</p>             <hr>             <p><b>Wind Speed:</b> 24.59 m/s</p>             <p><small>Max: 53.20 m/s | Min: 0.80 m/s</small></p>             <p><b>Wind Direction:</b> 350°</p>         </div>         </div>`)[0];
+                popup_c4fdc118cbf64a839fe6dc5ee61f8a1c.setContent(html_cfe56820bcfd8e37f01ffbce22dd2cdf);
+            
+        
+
+        circle_marker_06efecd5377e1dfbcb125ea1c0c3ed88.bindPopup(popup_c4fdc118cbf64a839fe6dc5ee61f8a1c)
+        ;
+
+        
+    
+    
+            circle_marker_06efecd5377e1dfbcb125ea1c0c3ed88.bindTooltip(
+                `<div>
+                     Wind: 24.6 m/s @ 350°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_db2463e08229301cf7f174fac240db62 = L.polyline(
+                [[36.1549, -3.6775], [35.66280219601538, -3.567839814524021]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_db2463e08229301cf7f174fac240db62.bindTooltip(
+                `<div>
+                     Wind: 24.6 m/s @ 350°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_fd6e56b532bba9ca18d00aac25b28cb7 = L.circleMarker(
+                [35.66280219601538, -3.567839814524021],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_41246cb101c40e4952151aceb4929844 = L.circleMarker(
+                [36.3179, -2.5944],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_d269622d39f5e1db2394273a61c5857a = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_4c32e842ca693ffee9fc88a83edc9edf = $(`<div id="html_4c32e842ca693ffee9fc88a83edc9edf" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -2.5944, 36.3179</p>             <p><b>Distance:</b> 6166.3 km</p>             <hr>             <p><b>Wind Speed:</b> 22.74 m/s</p>             <p><small>Max: 52.00 m/s | Min: 0.70 m/s</small></p>             <p><b>Wind Direction:</b> 208°</p>         </div>         </div>`)[0];
+                popup_d269622d39f5e1db2394273a61c5857a.setContent(html_4c32e842ca693ffee9fc88a83edc9edf);
+            
+        
+
+        circle_marker_41246cb101c40e4952151aceb4929844.bindPopup(popup_d269622d39f5e1db2394273a61c5857a)
+        ;
+
+        
+    
+    
+            circle_marker_41246cb101c40e4952151aceb4929844.bindTooltip(
+                `<div>
+                     Wind: 22.7 m/s @ 208°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_24ee414382f8b46bbe228fd904dc3834 = L.polyline(
+                [[36.3179, -2.5944], [36.7585517260325, -2.301160967867671]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_24ee414382f8b46bbe228fd904dc3834.bindTooltip(
+                `<div>
+                     Wind: 22.7 m/s @ 208°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_58627d0adf6f987ef2b54756331eae03 = L.circleMarker(
+                [36.7585517260325, -2.301160967867671],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_bd41953838ff62d80d874a9e8af16aa5 = L.circleMarker(
+                [36.4532, -1.7535],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_f58c5f808ee6ce4e405537aefdf75136 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_78bde3fb79ff2da7462b01d77ab486d6 = $(`<div id="html_78bde3fb79ff2da7462b01d77ab486d6" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -1.7535, 36.4532</p>             <p><b>Distance:</b> 6243.1 km</p>             <hr>             <p><b>Wind Speed:</b> 19.55 m/s</p>             <p><small>Max: 48.70 m/s | Min: 0.40 m/s</small></p>             <p><b>Wind Direction:</b> 267°</p>         </div>         </div>`)[0];
+                popup_f58c5f808ee6ce4e405537aefdf75136.setContent(html_78bde3fb79ff2da7462b01d77ab486d6);
+            
+        
+
+        circle_marker_bd41953838ff62d80d874a9e8af16aa5.bindPopup(popup_f58c5f808ee6ce4e405537aefdf75136)
+        ;
+
+        
+    
+    
+            circle_marker_bd41953838ff62d80d874a9e8af16aa5.bindTooltip(
+                `<div>
+                     Wind: 19.6 m/s @ 267°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_bdc0790f11da3748b459f75e5d761085 = L.polyline(
+                [[36.4532, -1.7535], [36.47849647003836, -1.13267030572207]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_bdc0790f11da3748b459f75e5d761085.bindTooltip(
+                `<div>
+                     Wind: 19.6 m/s @ 267°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_a554a98f81ff1afbd22baa92715ee18f = L.circleMarker(
+                [36.47849647003836, -1.13267030572207],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_918c7e4594178f70a6b2c808b27e6d2b = L.circleMarker(
+                [36.6867, -0.2677],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_dca13b8d0a6edcd257db82bab1567a37 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_617106ae84f8af94e322bacb6711c1d7 = $(`<div id="html_617106ae84f8af94e322bacb6711c1d7" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> -0.2677, 36.6867</p>             <p><b>Distance:</b> 6378.3 km</p>             <hr>             <p><b>Wind Speed:</b> 19.88 m/s</p>             <p><small>Max: 46.80 m/s | Min: 1.10 m/s</small></p>             <p><b>Wind Direction:</b> 260°</p>         </div>         </div>`)[0];
+                popup_dca13b8d0a6edcd257db82bab1567a37.setContent(html_617106ae84f8af94e322bacb6711c1d7);
+            
+        
+
+        circle_marker_918c7e4594178f70a6b2c808b27e6d2b.bindPopup(popup_dca13b8d0a6edcd257db82bab1567a37)
+        ;
+
+        
+    
+    
+            circle_marker_918c7e4594178f70a6b2c808b27e6d2b.bindTooltip(
+                `<div>
+                     Wind: 19.9 m/s @ 260°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_2d4860fdce1e22b2733126061f6a5a63 = L.polyline(
+                [[36.6867, -0.2677], [36.77266455013971, 0.3465235313664777]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_2d4860fdce1e22b2733126061f6a5a63.bindTooltip(
+                `<div>
+                     Wind: 19.9 m/s @ 260°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_633d7e2338627384ebae0180084ff554 = L.circleMarker(
+                [36.77266455013971, 0.3465235313664777],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_02e631819dc620c2a23dad9749df9379 = L.circleMarker(
+                [36.845, 0.7843],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_a79e35115fbfa117b54276ee91d9b061 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_822db4e2bf5cc030a1dcb927eec9daa0 = $(`<div id="html_822db4e2bf5cc030a1dcb927eec9daa0" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 0.7843, 36.8450</p>             <p><b>Distance:</b> 6474.9 km</p>             <hr>             <p><b>Wind Speed:</b> 20.74 m/s</p>             <p><small>Max: 51.50 m/s | Min: N/A m/s</small></p>             <p><b>Wind Direction:</b> 262°</p>         </div>         </div>`)[0];
+                popup_a79e35115fbfa117b54276ee91d9b061.setContent(html_822db4e2bf5cc030a1dcb927eec9daa0);
+            
+        
+
+        circle_marker_02e631819dc620c2a23dad9749df9379.bindPopup(popup_a79e35115fbfa117b54276ee91d9b061)
+        ;
+
+        
+    
+    
+            circle_marker_02e631819dc620c2a23dad9749df9379.bindTooltip(
+                `<div>
+                     Wind: 20.7 m/s @ 262°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_451904f900a670251a32e538176c6430 = L.polyline(
+                [[36.845, 0.7843], [36.91026309611002, 1.4037512118641087]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_451904f900a670251a32e538176c6430.bindTooltip(
+                `<div>
+                     Wind: 20.7 m/s @ 262°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_283525e2ec1056658c7a38595608a583 = L.circleMarker(
+                [36.91026309611002, 1.4037512118641087],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_cc0331ed67ef1aa4bec26ba47861122e = L.circleMarker(
+                [37.131, 2.651],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_a17e21b2d1cdbcd7535301b4ade9912d = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_81b5d1e5def3aeb02524c4610cbd188e = $(`<div id="html_81b5d1e5def3aeb02524c4610cbd188e" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 2.6510, 37.1310</p>             <p><b>Distance:</b> 6643.8 km</p>             <hr>             <p><b>Wind Speed:</b> 24.62 m/s</p>             <p><small>Max: 52.50 m/s | Min: 0.50 m/s</small></p>             <p><b>Wind Direction:</b> 248°</p>         </div>         </div>`)[0];
+                popup_a17e21b2d1cdbcd7535301b4ade9912d.setContent(html_81b5d1e5def3aeb02524c4610cbd188e);
+            
+        
+
+        circle_marker_cc0331ed67ef1aa4bec26ba47861122e.bindPopup(popup_a17e21b2d1cdbcd7535301b4ade9912d)
+        ;
+
+        
+    
+    
+            circle_marker_cc0331ed67ef1aa4bec26ba47861122e.bindTooltip(
+                `<div>
+                     Wind: 24.6 m/s @ 248°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_8e735df05a54cfa96e58b996c3606d08 = L.polyline(
+                [[37.131, 2.651], [37.31425061336215, 3.234511369895676]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_8e735df05a54cfa96e58b996c3606d08.bindTooltip(
+                `<div>
+                     Wind: 24.6 m/s @ 248°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_01ea4bcaf8b6a5b65d9d89b341820cbf = L.circleMarker(
+                [37.31425061336215, 3.234511369895676],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_6834ebdcd33bf310afa6e05683727c25 = L.circleMarker(
+                [37.2705, 4.65],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_131b23da5063f5f8057989c4cec55845 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_8ee52479144dfc9ecb70c29368333b83 = $(`<div id="html_8ee52479144dfc9ecb70c29368333b83" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 4.6500, 37.2705</p>             <p><b>Distance:</b> 6821.8 km</p>             <hr>             <p><b>Wind Speed:</b> 28.06 m/s</p>             <p><small>Max: 64.90 m/s | Min: 2.40 m/s</small></p>             <p><b>Wind Direction:</b> 244°</p>         </div>         </div>`)[0];
+                popup_131b23da5063f5f8057989c4cec55845.setContent(html_8ee52479144dfc9ecb70c29368333b83);
+            
+        
+
+        circle_marker_6834ebdcd33bf310afa6e05683727c25.bindPopup(popup_131b23da5063f5f8057989c4cec55845)
+        ;
+
+        
+    
+    
+            circle_marker_6834ebdcd33bf310afa6e05683727c25.bindTooltip(
+                `<div>
+                     Wind: 28.1 m/s @ 244°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_6eac93e5c30434904372a2e481ad6d1a = L.polyline(
+                [[37.2705, 4.65], [37.488115549686164, 5.215679385317033]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_6eac93e5c30434904372a2e481ad6d1a.bindTooltip(
+                `<div>
+                     Wind: 28.1 m/s @ 244°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_5f179ee96a991e6ee345f4138f5e6abf = L.circleMarker(
+                [37.488115549686164, 5.215679385317033],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_9e8c94cab6c76d68eb14981cc83a9f1b = L.circleMarker(
+                [37.3435, 6.2585],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_ce846d0e5fb375dfa48eba631bc641e9 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_e08e78834e9e05dc35e4b4f779ff2d5a = $(`<div id="html_e08e78834e9e05dc35e4b4f779ff2d5a" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 6.2585, 37.3435</p>             <p><b>Distance:</b> 6964.3 km</p>             <hr>             <p><b>Wind Speed:</b> 27.22 m/s</p>             <p><small>Max: 65.10 m/s | Min: 2.20 m/s</small></p>             <p><b>Wind Direction:</b> 254°</p>         </div>         </div>`)[0];
+                popup_ce846d0e5fb375dfa48eba631bc641e9.setContent(html_e08e78834e9e05dc35e4b4f779ff2d5a);
+            
+        
+
+        circle_marker_9e8c94cab6c76d68eb14981cc83a9f1b.bindPopup(popup_ce846d0e5fb375dfa48eba631bc641e9)
+        ;
+
+        
+    
+    
+            circle_marker_9e8c94cab6c76d68eb14981cc83a9f1b.bindTooltip(
+                `<div>
+                     Wind: 27.2 m/s @ 254°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_13c2102621489c34f98eb0b32fa99d3b = L.polyline(
+                [[37.3435, 6.2585], [37.477119188039126, 6.864546845812741]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_13c2102621489c34f98eb0b32fa99d3b.bindTooltip(
+                `<div>
+                     Wind: 27.2 m/s @ 254°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_bac70b9c90a5222fa906c5a3519e1373 = L.circleMarker(
+                [37.477119188039126, 6.864546845812741],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_049330634786fc3d01ce15bdd378f18a = L.circleMarker(
+                [37.4, 7.5],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_4610042a8025ba33d1d2edfa7dc4cbb3 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_70fd9c02cb59e51855a1b897f85d682d = $(`<div id="html_70fd9c02cb59e51855a1b897f85d682d" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 7.5000, 37.4000</p>             <p><b>Distance:</b> 7074.2 km</p>             <hr>             <p><b>Wind Speed:</b> 25.65 m/s</p>             <p><small>Max: 61.70 m/s | Min: 1.30 m/s</small></p>             <p><b>Wind Direction:</b> 254°</p>         </div>         </div>`)[0];
+                popup_4610042a8025ba33d1d2edfa7dc4cbb3.setContent(html_70fd9c02cb59e51855a1b897f85d682d);
+            
+        
+
+        circle_marker_049330634786fc3d01ce15bdd378f18a.bindPopup(popup_4610042a8025ba33d1d2edfa7dc4cbb3)
+        ;
+
+        
+    
+    
+            circle_marker_049330634786fc3d01ce15bdd378f18a.bindTooltip(
+                `<div>
+                     Wind: 25.6 m/s @ 254°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_d2e19686a8992147d16be05d625bd99d = L.polyline(
+                [[37.4, 7.5], [37.53865732665119, 8.104708882063406]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_d2e19686a8992147d16be05d625bd99d.bindTooltip(
+                `<div>
+                     Wind: 25.6 m/s @ 254°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_d976b81c491592c0f230a444b94fe733 = L.circleMarker(
+                [37.53865732665119, 8.104708882063406],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_34ac0f89131c262f3863d5c566aaf34f = L.circleMarker(
+                [37.4728, 9.7625],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_2b845bb6b7189366a4131092a045cb1e = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_fc3ac3868f6cfb8c45f9902362478d80 = $(`<div id="html_fc3ac3868f6cfb8c45f9902362478d80" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 9.7625, 37.4728</p>             <p><b>Distance:</b> 7274.1 km</p>             <hr>             <p><b>Wind Speed:</b> 22.94 m/s</p>             <p><small>Max: 41.00 m/s | Min: 3.70 m/s</small></p>             <p><b>Wind Direction:</b> 240°</p>         </div>         </div>`)[0];
+                popup_2b845bb6b7189366a4131092a045cb1e.setContent(html_fc3ac3868f6cfb8c45f9902362478d80);
+            
+        
+
+        circle_marker_34ac0f89131c262f3863d5c566aaf34f.bindPopup(popup_2b845bb6b7189366a4131092a045cb1e)
+        ;
+
+        
+    
+    
+            circle_marker_34ac0f89131c262f3863d5c566aaf34f.bindTooltip(
+                `<div>
+                     Wind: 22.9 m/s @ 240°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_098038f0318bb190267412bdbec0af40 = L.polyline(
+                [[37.4728, 9.7625], [37.71901178005173, 10.31082999264789]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_098038f0318bb190267412bdbec0af40.bindTooltip(
+                `<div>
+                     Wind: 22.9 m/s @ 240°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_3331a4dbb3f7e8ceb152b775d5ba4adb = L.circleMarker(
+                [37.71901178005173, 10.31082999264789],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_2819557b1c84141db135677f53362670 = L.circleMarker(
+                [37.4905, 10.6683],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_b13d381026f563dc7d2e5f5dc6bc66f6 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_607dde5e9f534e3963d84bcf6b2ab5e9 = $(`<div id="html_607dde5e9f534e3963d84bcf6b2ab5e9" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 10.6683, 37.4905</p>             <p><b>Distance:</b> 7354.1 km</p>             <hr>             <p><b>Wind Speed:</b> 22.32 m/s</p>             <p><small>Max: 39.60 m/s | Min: 2.10 m/s</small></p>             <p><b>Wind Direction:</b> 264°</p>         </div>         </div>`)[0];
+                popup_b13d381026f563dc7d2e5f5dc6bc66f6.setContent(html_607dde5e9f534e3963d84bcf6b2ab5e9);
+            
+        
+
+        circle_marker_2819557b1c84141db135677f53362670.bindPopup(popup_b13d381026f563dc7d2e5f5dc6bc66f6)
+        ;
+
+        
+    
+    
+            circle_marker_2819557b1c84141db135677f53362670.bindTooltip(
+                `<div>
+                     Wind: 22.3 m/s @ 264°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_a44512ef52d7e74f70c8e5632a107b7c = L.polyline(
+                [[37.4905, 10.6683], [37.542764231633825, 11.295003981671474]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_a44512ef52d7e74f70c8e5632a107b7c.bindTooltip(
+                `<div>
+                     Wind: 22.3 m/s @ 264°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_9c67a77d00295275934ffc2ecd4a4c14 = L.circleMarker(
+                [37.542764231633825, 11.295003981671474],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_d706db2f8e60eaebb33dddbeb9bf4af4 = L.circleMarker(
+                [37.4083, 11.3383],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_971206e3448aad5936425c51dee74fe7 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_f08a63e47afcf9edb21dc0ac3595a67c = $(`<div id="html_f08a63e47afcf9edb21dc0ac3595a67c" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 11.3383, 37.4083</p>             <p><b>Distance:</b> 7415.0 km</p>             <hr>             <p><b>Wind Speed:</b> 21.74 m/s</p>             <p><small>Max: 39.50 m/s | Min: 2.00 m/s</small></p>             <p><b>Wind Direction:</b> 266°</p>         </div>         </div>`)[0];
+                popup_971206e3448aad5936425c51dee74fe7.setContent(html_f08a63e47afcf9edb21dc0ac3595a67c);
+            
+        
+
+        circle_marker_d706db2f8e60eaebb33dddbeb9bf4af4.bindPopup(popup_971206e3448aad5936425c51dee74fe7)
+        ;
+
+        
+    
+    
+            circle_marker_d706db2f8e60eaebb33dddbeb9bf4af4.bindTooltip(
+                `<div>
+                     Wind: 21.7 m/s @ 266°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_7e9184caf27f92d45989420c8084c4c7 = L.polyline(
+                [[37.4083, 11.3383], [37.446659514063406, 11.965908794157714]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_7e9184caf27f92d45989420c8084c4c7.bindTooltip(
+                `<div>
+                     Wind: 21.7 m/s @ 266°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_7c7b973dad3b9806e53bd973f1bfa475 = L.circleMarker(
+                [37.446659514063406, 11.965908794157714],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_07b15fae4a63f92ac4cffaa1f36ecd10 = L.circleMarker(
+                [37.1896, 12.0899],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_ddece111fd3fedb6172b40d1a3b4e66b = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_29e7acca0f096337e0df135531447a2b = $(`<div id="html_29e7acca0f096337e0df135531447a2b" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 12.0899, 37.1896</p>             <p><b>Distance:</b> 7486.1 km</p>             <hr>             <p><b>Wind Speed:</b> 19.44 m/s</p>             <p><small>Max: 34.20 m/s | Min: 4.30 m/s</small></p>             <p><b>Wind Direction:</b> 268°</p>         </div>         </div>`)[0];
+                popup_ddece111fd3fedb6172b40d1a3b4e66b.setContent(html_29e7acca0f096337e0df135531447a2b);
+            
+        
+
+        circle_marker_07b15fae4a63f92ac4cffaa1f36ecd10.bindPopup(popup_ddece111fd3fedb6172b40d1a3b4e66b)
+        ;
+
+        
+    
+    
+            circle_marker_07b15fae4a63f92ac4cffaa1f36ecd10.bindTooltip(
+                `<div>
+                     Wind: 19.4 m/s @ 268°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_9cbf493d33e6ee94c4fbeb3316d03551 = L.polyline(
+                [[37.1896, 12.0899], [37.20530537953906, 12.717226647976227]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_9cbf493d33e6ee94c4fbeb3316d03551.bindTooltip(
+                `<div>
+                     Wind: 19.4 m/s @ 268°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_6db09a4c54de63f7fdac053f0743b305 = L.circleMarker(
+                [37.20530537953906, 12.717226647976227],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_057ab3835f1728ebfe92307435ebd43b = L.circleMarker(
+                [36.9983, 12.9155],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_3820b090a22e7ee84dcc13cf014bd64b = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_f80592ce7e22007535881e96ae26ecb7 = $(`<div id="html_f80592ce7e22007535881e96ae26ecb7" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 12.9155, 36.9983</p>             <p><b>Distance:</b> 7562.5 km</p>             <hr>             <p><b>Wind Speed:</b> 17.64 m/s</p>             <p><small>Max: 34.20 m/s | Min: 2.50 m/s</small></p>             <p><b>Wind Direction:</b> 257°</p>         </div>         </div>`)[0];
+                popup_3820b090a22e7ee84dcc13cf014bd64b.setContent(html_f80592ce7e22007535881e96ae26ecb7);
+            
+        
+
+        circle_marker_057ab3835f1728ebfe92307435ebd43b.bindPopup(popup_3820b090a22e7ee84dcc13cf014bd64b)
+        ;
+
+        
+    
+    
+            circle_marker_057ab3835f1728ebfe92307435ebd43b.bindTooltip(
+                `<div>
+                     Wind: 17.6 m/s @ 257°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_d53c566cdcb4665c182365796f81b3ae = L.polyline(
+                [[36.9983, 12.9155], [37.11162565371843, 13.525261386388832]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_d53c566cdcb4665c182365796f81b3ae.bindTooltip(
+                `<div>
+                     Wind: 17.6 m/s @ 257°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_9a73042fb2dc179c4e908c5a3d3497a2 = L.circleMarker(
+                [37.11162565371843, 13.525261386388832],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_be9747f23b1bdb10c9050d96cc36d215 = L.circleMarker(
+                [36.7978, 13.682],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_32af4016f1f8e383a9bb69ffaef7af58 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_cfcd9c6ab1b655db5c150e98ac95507e = $(`<div id="html_cfcd9c6ab1b655db5c150e98ac95507e" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 13.6820, 36.7978</p>             <p><b>Distance:</b> 7634.3 km</p>             <hr>             <p><b>Wind Speed:</b> 17.31 m/s</p>             <p><small>Max: 36.40 m/s | Min: 1.10 m/s</small></p>             <p><b>Wind Direction:</b> 250°</p>         </div>         </div>`)[0];
+                popup_32af4016f1f8e383a9bb69ffaef7af58.setContent(html_cfcd9c6ab1b655db5c150e98ac95507e);
+            
+        
+
+        circle_marker_be9747f23b1bdb10c9050d96cc36d215.bindPopup(popup_32af4016f1f8e383a9bb69ffaef7af58)
+        ;
+
+        
+    
+    
+            circle_marker_be9747f23b1bdb10c9050d96cc36d215.bindTooltip(
+                `<div>
+                     Wind: 17.3 m/s @ 250°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_4cecd45a2c844fad50964e7314403314 = L.polyline(
+                [[36.7978, 13.682], [36.96634762921154, 14.269864755196622]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_4cecd45a2c844fad50964e7314403314.bindTooltip(
+                `<div>
+                     Wind: 17.3 m/s @ 250°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_8ddb21717c8ca587d245f47ba48ffe6e = L.circleMarker(
+                [36.96634762921154, 14.269864755196622],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_b90fa92e309fc3f89078de40c87d26e3 = L.circleMarker(
+                [36.6434, 14.2738],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_8a60db5b23c46ba504366146ca8b2377 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_8732d5e23ea03375302d1b7fbe15826e = $(`<div id="html_8732d5e23ea03375302d1b7fbe15826e" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 14.2738, 36.6434</p>             <p><b>Distance:</b> 7690.1 km</p>             <hr>             <p><b>Wind Speed:</b> 17.90 m/s</p>             <p><small>Max: 39.60 m/s | Min: 1.30 m/s</small></p>             <p><b>Wind Direction:</b> 240°</p>         </div>         </div>`)[0];
+                popup_8a60db5b23c46ba504366146ca8b2377.setContent(html_8732d5e23ea03375302d1b7fbe15826e);
+            
+        
+
+        circle_marker_b90fa92e309fc3f89078de40c87d26e3.bindPopup(popup_8a60db5b23c46ba504366146ca8b2377)
+        ;
+
+        
+    
+    
+            circle_marker_b90fa92e309fc3f89078de40c87d26e3.bindTooltip(
+                `<div>
+                     Wind: 17.9 m/s @ 240°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_4da660337a33a47e145e96801a0a5311 = L.polyline(
+                [[36.6434, 14.2738], [36.89037093329212, 14.815632119318547]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_4da660337a33a47e145e96801a0a5311.bindTooltip(
+                `<div>
+                     Wind: 17.9 m/s @ 240°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_f3d08e89c00dd09da214e26c6057eb33 = L.circleMarker(
+                [36.89037093329212, 14.815632119318547],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_d48d9dd81bf003fe92a07f7666233198 = L.circleMarker(
+                [36.4743, 14.9483],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_033b19c07310683759f015a45fbac45d = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_65a2b7f2cd8974507e7639be7d17defc = $(`<div id="html_65a2b7f2cd8974507e7639be7d17defc" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 14.9483, 36.4743</p>             <p><b>Distance:</b> 7753.2 km</p>             <hr>             <p><b>Wind Speed:</b> 18.98 m/s</p>             <p><small>Max: 42.10 m/s | Min: 3.60 m/s</small></p>             <p><b>Wind Direction:</b> 263°</p>         </div>         </div>`)[0];
+                popup_033b19c07310683759f015a45fbac45d.setContent(html_65a2b7f2cd8974507e7639be7d17defc);
+            
+        
+
+        circle_marker_d48d9dd81bf003fe92a07f7666233198.bindPopup(popup_033b19c07310683759f015a45fbac45d)
+        ;
+
+        
+    
+    
+            circle_marker_d48d9dd81bf003fe92a07f7666233198.bindTooltip(
+                `<div>
+                     Wind: 19.0 m/s @ 263°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_1d6b4a245d5461b44636dd61758b1f88 = L.polyline(
+                [[36.4743, 14.9483], [36.53696661678215, 15.565191928687407]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_1d6b4a245d5461b44636dd61758b1f88.bindTooltip(
+                `<div>
+                     Wind: 19.0 m/s @ 263°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_65d59f856d1db8136f84fc48956dac8e = L.circleMarker(
+                [36.53696661678215, 15.565191928687407],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_6e17eb132d9b8cecebc7684e139c3c5f = L.circleMarker(
+                [36.2865, 15.753],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_7dbae775bd6056231e130bc1c9db94ad = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_6968ba9ca522c2b05f7c5bdf568b5e03 = $(`<div id="html_6968ba9ca522c2b05f7c5bdf568b5e03" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 15.7530, 36.2865</p>             <p><b>Distance:</b> 7828.3 km</p>             <hr>             <p><b>Wind Speed:</b> 19.76 m/s</p>             <p><small>Max: 40.70 m/s | Min: 1.10 m/s</small></p>             <p><b>Wind Direction:</b> 264°</p>         </div>         </div>`)[0];
+                popup_7dbae775bd6056231e130bc1c9db94ad.setContent(html_6968ba9ca522c2b05f7c5bdf568b5e03);
+            
+        
+
+        circle_marker_6e17eb132d9b8cecebc7684e139c3c5f.bindPopup(popup_7dbae775bd6056231e130bc1c9db94ad)
+        ;
+
+        
+    
+    
+            circle_marker_6e17eb132d9b8cecebc7684e139c3c5f.bindTooltip(
+                `<div>
+                     Wind: 19.8 m/s @ 264°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_0f81e15cf452eee9f5b98cbd29d46312 = L.polyline(
+                [[36.2865, 15.753], [36.34136715554552, 16.36954926389947]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_0f81e15cf452eee9f5b98cbd29d46312.bindTooltip(
+                `<div>
+                     Wind: 19.8 m/s @ 264°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_8abd53d6619b2ac0f7002d102c011194 = L.circleMarker(
+                [36.34136715554552, 16.36954926389947],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_a56e5f3f1e8372d38705df023361c955 = L.circleMarker(
+                [35.991, 17.194],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff5722", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_cc50a87b630e66fc81d0e1a21d398e28 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_280b1d01da1b5acdc0dab9f99589bdcc = $(`<div id="html_280b1d01da1b5acdc0dab9f99589bdcc" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 17.1940, 35.9910</p>             <p><b>Distance:</b> 7961.8 km</p>             <hr>             <p><b>Wind Speed:</b> 22.79 m/s</p>             <p><small>Max: 38.20 m/s | Min: 3.10 m/s</small></p>             <p><b>Wind Direction:</b> 275°</p>         </div>         </div>`)[0];
+                popup_cc50a87b630e66fc81d0e1a21d398e28.setContent(html_280b1d01da1b5acdc0dab9f99589bdcc);
+            
+        
+
+        circle_marker_a56e5f3f1e8372d38705df023361c955.bindPopup(popup_cc50a87b630e66fc81d0e1a21d398e28)
+        ;
+
+        
+    
+    
+            circle_marker_a56e5f3f1e8372d38705df023361c955.bindTooltip(
+                `<div>
+                     Wind: 22.8 m/s @ 275°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_11dfe504aaf99e3ce9016861e78c2c81 = L.polyline(
+                [[35.991, 17.194], [35.94742212862617, 17.809611933695724]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_11dfe504aaf99e3ce9016861e78c2c81.bindTooltip(
+                `<div>
+                     Wind: 22.8 m/s @ 275°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_3e4d3f84129124de916ca3a7793a0b3d = L.circleMarker(
+                [35.94742212862617, 17.809611933695724],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_89cf80bfcbf5f9c2f8144a322517c3a3 = L.circleMarker(
+                [35.6405, 18.9025],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_50da0acda1f7cf88cf7aaddb7096a980 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_e6d6a577d161a727f640f3dfec6f8455 = $(`<div id="html_e6d6a577d161a727f640f3dfec6f8455" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 18.9025, 35.6405</p>             <p><b>Distance:</b> 8120.7 km</p>             <hr>             <p><b>Wind Speed:</b> 19.94 m/s</p>             <p><small>Max: 34.40 m/s | Min: N/A m/s</small></p>             <p><b>Wind Direction:</b> 263°</p>         </div>         </div>`)[0];
+                popup_50da0acda1f7cf88cf7aaddb7096a980.setContent(html_e6d6a577d161a727f640f3dfec6f8455);
+            
+        
+
+        circle_marker_89cf80bfcbf5f9c2f8144a322517c3a3.bindPopup(popup_50da0acda1f7cf88cf7aaddb7096a980)
+        ;
+
+        
+    
+    
+            circle_marker_89cf80bfcbf5f9c2f8144a322517c3a3.bindTooltip(
+                `<div>
+                     Wind: 19.9 m/s @ 263°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_b69fd1cbba6bd5dea90836e1d497e141 = L.polyline(
+                [[35.6405, 18.9025], [35.703166616782156, 19.512890078062437]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_b69fd1cbba6bd5dea90836e1d497e141.bindTooltip(
+                `<div>
+                     Wind: 19.9 m/s @ 263°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_0837b97240096900d43547c784eb9769 = L.circleMarker(
+                [35.703166616782156, 19.512890078062437],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_66c7bd5a85f15b6f67aa92be488d4a81 = L.circleMarker(
+                [35.196, 21.069],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_67ebb3223ccb81dcb8925d709d6c514f = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_d1e2a9e57bfe2ec2fe2027e211ace33b = $(`<div id="html_d1e2a9e57bfe2ec2fe2027e211ace33b" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 21.0690, 35.1960</p>             <p><b>Distance:</b> 8323.2 km</p>             <hr>             <p><b>Wind Speed:</b> 20.62 m/s</p>             <p><small>Max: 34.00 m/s | Min: 2.30 m/s</small></p>             <p><b>Wind Direction:</b> 241°</p>         </div>         </div>`)[0];
+                popup_67ebb3223ccb81dcb8925d709d6c514f.setContent(html_d1e2a9e57bfe2ec2fe2027e211ace33b);
+            
+        
+
+        circle_marker_66c7bd5a85f15b6f67aa92be488d4a81.bindPopup(popup_67ebb3223ccb81dcb8925d709d6c514f)
+        ;
+
+        
+    
+    
+            circle_marker_66c7bd5a85f15b6f67aa92be488d4a81.bindTooltip(
+                `<div>
+                     Wind: 20.6 m/s @ 241°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_a8aa12ba43d98501437f7f2ae9b740f8 = L.polyline(
+                [[35.196, 21.069], [35.4353459289703, 21.606199548561236]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_a8aa12ba43d98501437f7f2ae9b740f8.bindTooltip(
+                `<div>
+                     Wind: 20.6 m/s @ 241°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_bc14f07c738a0d7569ac3560a2217f96 = L.circleMarker(
+                [35.4353459289703, 21.606199548561236],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_3f77b04ade861026aca283498ea92668 = L.circleMarker(
+                [34.4705, 24.036],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff9800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_301763e78a30538da26d45d821076171 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_03f24264d17f9386eb65e725941f0186 = $(`<div id="html_03f24264d17f9386eb65e725941f0186" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 24.0360, 34.4705</p>             <p><b>Distance:</b> 8606.2 km</p>             <hr>             <p><b>Wind Speed:</b> 14.44 m/s</p>             <p><small>Max: 27.90 m/s | Min: 0.80 m/s</small></p>             <p><b>Wind Direction:</b> 203°</p>         </div>         </div>`)[0];
+                popup_301763e78a30538da26d45d821076171.setContent(html_03f24264d17f9386eb65e725941f0186);
+            
+        
+
+        circle_marker_3f77b04ade861026aca283498ea92668.bindPopup(popup_301763e78a30538da26d45d821076171)
+        ;
+
+        
+    
+    
+            circle_marker_3f77b04ade861026aca283498ea92668.bindTooltip(
+                `<div>
+                     Wind: 14.4 m/s @ 203°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_6c0206e5c4168ef31168b07fce948020 = L.polyline(
+                [[34.4705, 24.036], [34.93006766962762, 24.274921305697223]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_6c0206e5c4168ef31168b07fce948020.bindTooltip(
+                `<div>
+                     Wind: 14.4 m/s @ 203°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_813883d1f9efe4e9f42aaf67b5951189 = L.circleMarker(
+                [34.93006766962762, 24.274921305697223],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_ebf3f4f31043ae4174cf6a4f5d3eb636 = L.circleMarker(
+                [34.012, 25.4788],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffeb3b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_e26b2b23cf6b14ffcb9c50be06cd86b6 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_20b2a95d9908343c1f5698771ed7f8d3 = $(`<div id="html_20b2a95d9908343c1f5698771ed7f8d3" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 25.4788, 34.0120</p>             <p><b>Distance:</b> 8748.3 km</p>             <hr>             <p><b>Wind Speed:</b> 13.76 m/s</p>             <p><small>Max: 32.80 m/s | Min: 3.90 m/s</small></p>             <p><b>Wind Direction:</b> 218°</p>         </div>         </div>`)[0];
+                popup_e26b2b23cf6b14ffcb9c50be06cd86b6.setContent(html_20b2a95d9908343c1f5698771ed7f8d3);
+            
+        
+
+        circle_marker_ebf3f4f31043ae4174cf6a4f5d3eb636.bindPopup(popup_e26b2b23cf6b14ffcb9c50be06cd86b6)
+        ;
+
+        
+    
+    
+            circle_marker_ebf3f4f31043ae4174cf6a4f5d3eb636.bindTooltip(
+                `<div>
+                     Wind: 13.8 m/s @ 218°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_446a10ee971ee7ebb484334be74ae8fb = L.polyline(
+                [[34.012, 25.4788], [34.40438818526654, 25.85264711723658]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_446a10ee971ee7ebb484334be74ae8fb.bindTooltip(
+                `<div>
+                     Wind: 13.8 m/s @ 218°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_b54aa259dcd56ca29a392ed4e187da74 = L.circleMarker(
+                [34.40438818526654, 25.85264711723658],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var circle_marker_d5a28ebaa6b6fcd2b8dc3f8b816ff238 = L.circleMarker(
+                [33.2195, 27.9275],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffeb3b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 1}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+        var popup_d45cab232500af15da421e2dfd227cd9 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_2fbd21c9e99c4a8b1d76382c8f7bc1cd = $(`<div id="html_2fbd21c9e99c4a8b1d76382c8f7bc1cd" style="width: 100.0%; height: 100.0%;">         <div style="width: 200px;">             <h5>Wind Data</h5>             <p><b>Location:</b> 27.9275, 33.2195</p>             <p><b>Distance:</b> 8991.6 km</p>             <hr>             <p><b>Wind Speed:</b> 11.54 m/s</p>             <p><small>Max: 26.90 m/s | Min: 0.50 m/s</small></p>             <p><b>Wind Direction:</b> 230°</p>         </div>         </div>`)[0];
+                popup_d45cab232500af15da421e2dfd227cd9.setContent(html_2fbd21c9e99c4a8b1d76382c8f7bc1cd);
+            
+        
+
+        circle_marker_d5a28ebaa6b6fcd2b8dc3f8b816ff238.bindPopup(popup_d45cab232500af15da421e2dfd227cd9)
+        ;
+
+        
+    
+    
+            circle_marker_d5a28ebaa6b6fcd2b8dc3f8b816ff238.bindTooltip(
+                `<div>
+                     Wind: 11.5 m/s @ 230°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_222b587023bb20e86ac6f30a8da689f7 = L.polyline(
+                [[33.2195, 27.9275], [33.54422402416509, 28.38197408934548]],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            poly_line_222b587023bb20e86ac6f30a8da689f7.bindTooltip(
+                `<div>
+                     Wind: 11.5 m/s @ 230°
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_165a79d98e60b77c407ab65ac460821d = L.circleMarker(
+                [33.54422402416509, 28.38197408934548],
+                {"bubblingMouseEvents": true, "color": "#333", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#333", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(feature_group_716240961aa50f7b53bdd46764162169);
+        
+    
+            var marker_a75aab2324a578fed9e7d50a9f590a64 = L.marker(
+                [31.216667, 121.5],
+                {}
+            ).addTo(map_0097082f0db79addc51fa79cde59cf69);
+        
+    
+            var icon_9dbeba5cbe593828848bcfc65b16a5c1 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "ship", "iconColor": "white", "markerColor": "green", "prefix": "fa"}
+            );
+            marker_a75aab2324a578fed9e7d50a9f590a64.setIcon(icon_9dbeba5cbe593828848bcfc65b16a5c1);
+        
+    
+        var popup_fa813e19f44a53133e7adae05f705f37 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_4a2a91cc5fcf6aef4016634368d5dc84 = $(`<div id="html_4a2a91cc5fcf6aef4016634368d5dc84" style="width: 100.0%; height: 100.0%;"><b>Origin:</b> Shanghai</div>`)[0];
+                popup_fa813e19f44a53133e7adae05f705f37.setContent(html_4a2a91cc5fcf6aef4016634368d5dc84);
+            
+        
+
+        marker_a75aab2324a578fed9e7d50a9f590a64.bindPopup(popup_fa813e19f44a53133e7adae05f705f37)
+        ;
+
+        
+    
+    
+            marker_a75aab2324a578fed9e7d50a9f590a64.bindTooltip(
+                `<div>
+                     Origin: Shanghai
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_3c690f1456a1ad6a575306c34fdcf22c = L.marker(
+                [40.7, -74.016667],
+                {}
+            ).addTo(map_0097082f0db79addc51fa79cde59cf69);
+        
+    
+            var icon_cf3f9c841d89e3005ae33d4dd65f51ad = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "anchor", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
+            );
+            marker_3c690f1456a1ad6a575306c34fdcf22c.setIcon(icon_cf3f9c841d89e3005ae33d4dd65f51ad);
+        
+    
+        var popup_521261941fdb8c4036accae772e179de = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2dcc62bcfc41c6f667a9ae17fb1a77a2 = $(`<div id="html_2dcc62bcfc41c6f667a9ae17fb1a77a2" style="width: 100.0%; height: 100.0%;"><b>Destination:</b> City</div>`)[0];
+                popup_521261941fdb8c4036accae772e179de.setContent(html_2dcc62bcfc41c6f667a9ae17fb1a77a2);
+            
+        
+
+        marker_3c690f1456a1ad6a575306c34fdcf22c.bindPopup(popup_521261941fdb8c4036accae772e179de)
+        ;
+
+        
+    
+    
+            marker_3c690f1456a1ad6a575306c34fdcf22c.bindTooltip(
+                `<div>
+                     Destination: City
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var layer_control_fdd5361afed5cdd423fccac7d9d19311 = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_f755d837e97283e4ca541c34262f1626,
+                    "cartodbpositron" : tile_layer_d2880df7a576294830f218fbaee93838,
+                    "cartodbdark_matter" : tile_layer_1ecdb1302656d6f276f6cf1f746f2b45,
+                },
+                overlays :  {
+                    "macro_element_3d495c70a74a6a4d8790a5de9c0ebe5a" : geo_json_3d495c70a74a6a4d8790a5de9c0ebe5a,
+                    "Wind Data" : feature_group_716240961aa50f7b53bdd46764162169,
+                },
+            };
+            L.control.layers(
+                layer_control_fdd5361afed5cdd423fccac7d9d19311.base_layers,
+                layer_control_fdd5361afed5cdd423fccac7d9d19311.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_0097082f0db79addc51fa79cde59cf69);
+            tile_layer_d2880df7a576294830f218fbaee93838.remove();
+            tile_layer_1ecdb1302656d6f276f6cf1f746f2b45.remove();
+        
+    
+            L.control.fullscreen(
+                {"forceSeparateButton": false, "position": "topleft", "title": "Full Screen", "titleCancel": "Exit Full Screen"}
+            ).addTo(map_0097082f0db79addc51fa79cde59cf69);
+        
+    
+            var measure_control_eddc282a920a819a52a253d6408d6d8e = new L.Control.Measure(
+                {"position": "topright", "primaryAreaUnit": "sqmeters", "primaryLengthUnit": "meters", "secondaryAreaUnit": "acres", "secondaryLengthUnit": "miles"});
+            map_0097082f0db79addc51fa79cde59cf69.addControl(measure_control_eddc282a920a819a52a253d6408d6d8e);
+
+        
+    
+            map_0097082f0db79addc51fa79cde59cf69.fitBounds(
+                [[31.216667, -74.016667], [40.7, 121.5]],
+                {}
+            );
+        
+</script>
+</html>
